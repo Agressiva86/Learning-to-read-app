@@ -28,7 +28,6 @@ export function App() {
   const [selected, setSelected] = useState<Set<string>>(() => new Set(STARTER));
   const [density, setDensity] = useState<SheetDensity>(4);
   const [separateLevels, setSeparateLevels] = useState(true);
-  const [showWord, setShowWord] = useState(false);
   const [editing, setEditing] = useState<WordEntry | null>(null);
   const [adding, setAdding] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
@@ -286,10 +285,6 @@ export function App() {
                   <input type="checkbox" checked={separateLevels} onChange={(event) => setSeparateLevels(event.target.checked)} />
                   Nie mieszaj poziomów
                 </label>
-                <label className="check">
-                  <input type="checkbox" checked={showWord} onChange={(event) => setShowWord(event.target.checked)} />
-                  Pokaż całe słowo dla rodzica
-                </label>
                 <button type="button" className="btn btn-primary" disabled={pages.length === 0 || busy !== null} onClick={() => download()}>
                   Pobierz PDF
                 </button>
@@ -314,7 +309,6 @@ export function App() {
                         page={index + 1}
                         total={pages.length}
                         density={density}
-                        showWord={showWord}
                       />
                     </div>
                     <button type="button" className="sheet-download app-chrome" onClick={() => download(index)} disabled={busy !== null}>
@@ -420,7 +414,6 @@ export function App() {
             page={index + 1}
             total={pages.length}
             density={density}
-            showWord={showWord}
           />
         ))}
       </div>
