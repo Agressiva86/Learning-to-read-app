@@ -333,9 +333,34 @@ input[type="checkbox"]:indeterminate {
   box-shadow: 0 22px 50px rgba(28, 32, 48, 0.14);
 }
 .sheet-download {
-  display: block;
-  margin: 12px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 14px auto 0;
+  padding: 10px 16px 10px 10px;
+  border: 0;
+  border-radius: 20px;
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 12px 28px rgba(28, 32, 48, 0.08);
+  text-align: left;
 }
+.sheet-download:hover:not(:disabled) { background: #f7f8fb; }
+.sheet-download:disabled { opacity: 0.45; cursor: not-allowed; }
+.sheet-download-icon {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+}
+.sheet-download-copy { display: flex; flex-direction: column; min-width: 0; }
+.sheet-download-title { font-weight: 500; letter-spacing: -0.02em; }
+.sheet-download-meta { color: var(--muted); font-size: 13px; }
 
 .sheet {
   width: 210mm;
