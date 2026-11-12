@@ -1,4 +1,4 @@
-# Sylabowo
+# Grafi
 
 Kartki A4 do nauki czytania metodą sylabową. Każde słowo ma kolorowankę i sylaby w osobnych ramkach. Kartkę można pobrać jako PDF albo wydrukować.
 

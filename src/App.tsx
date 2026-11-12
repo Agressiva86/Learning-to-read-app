@@ -160,7 +160,7 @@ export function App() {
         <div className="brand">
           <div>
             <p className="brand-kicker">Metoda sylabowa</p>
-            <h1>Sylabowo</h1>
+            <h1>Grafi</h1>
             <p className="hero-lead">Ułóż kartkę do czytania i kolorowania.</p>
           </div>
         </div>
