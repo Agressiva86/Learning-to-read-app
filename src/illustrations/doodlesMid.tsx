@@ -169,9 +169,18 @@ export const midScenes: Record<string, SceneCmp> = {
   ),
   zelazko: ({ label }) => (
     <Picture label={label}>
-      <path d="M36 124 H188 L158 78 H96 Q70 78 58 104 Z" {...ink(2.5)} />
-      <path d="M112 78 V46 H158 Q170 62 158 78" {...ink(2.2)} />
-      <path d="M52 124 H176" {...line(1.8)} />
+      <path d="M64 86 Q30 74 24 104 Q20 128 46 122" {...line(2)} />
+      <path d="M42 116 L168 100 L214 126 L188 146 L42 146 Q24 146 24 132 Q24 116 42 116 Z" {...ink(2.4)} />
+      <circle cx="70" cy="130" r="3.4" {...line(1.6)} />
+      <circle cx="92" cy="128" r="3.4" {...line(1.6)} />
+      <circle cx="114" cy="126" r="3.4" {...line(1.6)} />
+      <circle cx="136" cy="123" r="3.4" {...line(1.6)} />
+      <circle cx="158" cy="120" r="3.4" {...line(1.6)} />
+      <path d="M58 114 L146 102 Q178 94 166 68 L152 58 Q112 44 80 58 Q52 72 58 114 Z" {...ink(2.4)} />
+      <path d="M88 60 C 78 22, 148 8, 186 42 C 198 54, 182 74, 164 70 C 176 60, 174 46, 154 40 C 124 30, 102 42, 104 62 Z" {...ink(2.3)} />
+      <circle cx="112" cy="86" r="12" {...line(1.8)} />
+      <path d="M112 86 L122 76" {...line(1.6)} />
+      <path d="M72 90 H96 V108 H72 Z" {...line(1.6)} />
     </Picture>
   ),
   okularnik: ({ label }) => (
