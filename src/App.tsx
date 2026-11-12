@@ -165,9 +165,6 @@ export function App() {
           </div>
         </div>
         <div className="topbar-side">
-          <span className="avatar" aria-hidden="true">
-            <Mascot />
-          </span>
           <nav className="tabs" aria-label="Widoki">
             <button type="button" className={view === "karty" ? "tab is-on" : "tab"} onClick={() => setView("karty")}>
               Kartki do druku
@@ -479,20 +476,6 @@ function HeroWave() {
         <path d="M-20 152c112-32 174 12 268-4 110-20 172-50 278-30 78 14 160 14 250-10" />
         <path d="M80 46c74-28 128 22 210 6 90-18 136-50 228-34" />
       </g>
-    </svg>
-  );
-}
-
-function Mascot() {
-  return (
-    <svg className="mascot" viewBox="0 0 72 72" aria-hidden="true">
-      <path d="M18 40c0-14 10-24 22-24 8 0 14 4 16 8 6-2 12 2 12 8 0 4-2 7-6 8 2 10-6 20-18 20-14 0-26-8-26-20z" fill="#fff" stroke="#241c17" strokeWidth="2.2" />
-      <path d="M22 28c2-10 8-16 10-16 2 6 2 12 0 16" fill="#fff" stroke="#241c17" strokeWidth="2" />
-      <path d="M34 28c2-12 8-18 10-16 1 6 0 12-2 16" fill="#fff" stroke="#241c17" strokeWidth="2" />
-      <path d="M30 40 q4 -5 8 0 M46 40 q4 -5 8 0" fill="none" stroke="#241c17" strokeWidth="2" strokeLinecap="round" />
-      <path d="M34 48 q8 10 16 0" fill="#fff" stroke="#241c17" strokeWidth="2" />
-      <circle cx="28" cy="46" r="2" fill="none" stroke="#241c17" />
-      <circle cx="56" cy="46" r="2" fill="none" stroke="#241c17" />
     </svg>
   );
 }
