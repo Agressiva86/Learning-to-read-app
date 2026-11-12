@@ -1,5 +1,5 @@
 import type { WordEntry } from "../data/words";
-import { DIFFICULTY_ORDER, DIFFICULTY_SHEET, difficultyOf, type Difficulty } from "./difficulty";
+import { DIFFICULTY_ORDER, DIFFICULTY_SHEET, levelOf, type Difficulty } from "./difficulty";
 
 export type SheetDensity = 4 | 6;
 
@@ -17,7 +17,7 @@ export function buildPages(words: WordEntry[], perPage: SheetDensity, separateLe
 function groupByDifficulty(words: WordEntry[]): WordEntry[][] {
   const buckets = new Map<Difficulty, WordEntry[]>();
   for (const word of words) {
-    const key = difficultyOf(word.syllables.length);
+    const key = levelOf(word);
     const list = buckets.get(key) ?? [];
     list.push(word);
     buckets.set(key, list);
@@ -29,7 +29,7 @@ function groupByDifficulty(words: WordEntry[]): WordEntry[][] {
 }
 
 export function pageLevelLabel(words: WordEntry[]): string {
-  const labels = new Set(words.map((word) => difficultyOf(word.syllables.length)));
+  const labels = new Set(words.map((word) => levelOf(word)));
   if (labels.size === 1) {
     const only = [...labels][0] ?? "inne";
     return DIFFICULTY_SHEET[only];

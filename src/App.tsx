@@ -8,7 +8,7 @@ import {
   DIFFICULTY_HINT,
   DIFFICULTY_LABEL,
   DIFFICULTY_ORDER,
-  difficultyOf,
+  levelOf,
   type Difficulty,
 } from "./lib/difficulty";
 import { buildPages, type SheetDensity } from "./lib/pages";
@@ -38,12 +38,12 @@ export function App() {
   const previewRef = useRef<HTMLDivElement>(null);
 
   const words = useMemo(() => mergeWords(custom), [custom]);
-  const hasOther = words.some((word) => difficultyOf(word.syllables.length) === "inne");
+  const hasOther = words.some((word) => levelOf(word) === "inne");
 
   const visible = useMemo(() => {
     const folded = foldPolish(query.trim());
     return words.filter((word) => {
-      const level = difficultyOf(word.syllables.length);
+      const level = levelOf(word);
       if (filter !== "wszystkie" && level !== filter) return false;
       if (!folded) return true;
       return foldPolish(word.word).includes(folded) || word.syllables.some((part) => foldPolish(part).includes(folded));
@@ -54,8 +54,8 @@ export function App() {
     return words
       .filter((word) => selected.has(word.id))
       .sort((a, b) => {
-        const byLevel = DIFFICULTY_ORDER.indexOf(difficultyOf(a.syllables.length))
-          - DIFFICULTY_ORDER.indexOf(difficultyOf(b.syllables.length));
+        const byLevel = DIFFICULTY_ORDER.indexOf(levelOf(a))
+          - DIFFICULTY_ORDER.indexOf(levelOf(b));
         if (byLevel !== 0) return byLevel;
         return words.indexOf(a) - words.indexOf(b);
       });
@@ -202,7 +202,7 @@ export function App() {
                   current={filter}
                   value={level}
                   onSelect={setFilter}
-                  count={words.filter((word) => difficultyOf(word.syllables.length) === level).length}
+                  count={words.filter((word) => levelOf(word) === level).length}
                   label={DIFFICULTY_LABEL[level]}
                 />
               ))}
@@ -213,7 +213,7 @@ export function App() {
             </div>
             <div className="groups">
               {DIFFICULTY_ORDER.map((level) => {
-                const group = visible.filter((word) => difficultyOf(word.syllables.length) === level);
+                const group = visible.filter((word) => levelOf(word) === level);
                 if (group.length === 0) return null;
                 const selectedCount = group.filter((word) => selected.has(word.id)).length;
                 return (
@@ -340,7 +340,7 @@ export function App() {
           <div className="library-head">
             <div>
               <h2>Zestaw słów</h2>
-              <p>Na starcie jest 40 słów z domu, jedzenia, zabawy i dnia codziennego. Możesz dopisać własne.</p>
+              <p>Na starcie jest 100 słów: łatwe, średnie i trudne. Możesz dopisać własne.</p>
             </div>
             <button
               type="button"
@@ -366,7 +366,7 @@ export function App() {
           ) : null}
           <ul className="library-list">
             {words.map((word) => {
-              const level = difficultyOf(word.syllables.length);
+              const level = levelOf(word);
               return (
                 <li key={word.id} className="library-row">
                   <span className="thumb" aria-hidden="true">
