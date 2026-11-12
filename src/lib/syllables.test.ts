@@ -5,8 +5,8 @@ import { buildPages } from "./pages";
 import { isPolishWord, splitSyllables, syllablesMatchWord } from "./syllables";
 
 describe("zestaw startowy", () => {
-  it("ma 100 słów i ilustrację do każdego", () => {
-    expect(BUILTIN_WORDS).toHaveLength(100);
+  it("ma ilustrację do każdego słowa", () => {
+    expect(BUILTIN_WORDS).toHaveLength(94);
     const pictures = new Set<string>(ILLUSTRATIONS);
     for (const word of BUILTIN_WORDS) {
       expect(pictures.has(word.illustration), word.word).toBe(true);
@@ -15,10 +15,10 @@ describe("zestaw startowy", () => {
     }
   });
 
-  it("trzyma poziomy: 35 łatwych, 40 średnich, 25 trudnych", () => {
+  it("trzyma poziomy: 35 łatwych, 40 średnich, 19 trudnych", () => {
     const counts = { latwy: 0, sredni: 0, trudny: 0, inne: 0 };
     for (const word of BUILTIN_WORDS) counts[levelOf(word)] += 1;
-    expect(counts).toEqual({ latwy: 35, sredni: 40, trudny: 25, inne: 0 });
+    expect(counts).toEqual({ latwy: 35, sredni: 40, trudny: 19, inne: 0 });
   });
 
   it("podpowiada ten sam podział, co w zestawie", () => {
@@ -33,7 +33,7 @@ describe("kartki", () => {
     const pages = buildPages(BUILTIN_WORDS, 4, true);
     expect(pages[0]?.map((word) => word.word)).toEqual(["mama", "tata", "dom", "kot"]);
     const flat = pages.flat();
-    expect(flat).toHaveLength(100);
+    expect(flat).toHaveLength(94);
     for (const page of pages) {
       const levels = new Set(page.map((word) => levelOf(word)));
       expect(levels.size).toBe(1);

@@ -337,7 +337,7 @@ export function App() {
           <div className="library-head">
             <div>
               <h2>Zestaw słów</h2>
-              <p>Na starcie jest 100 słów: łatwe, średnie i trudne. Możesz dopisać własne.</p>
+              <p>Na starcie są rzeczowniki w formie podstawowej: łatwe, średnie i trudne. Możesz dopisać własne.</p>
             </div>
             <button
               type="button"

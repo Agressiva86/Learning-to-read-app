@@ -10,15 +10,6 @@ export const hardScenes: Record<string, SceneCmp> = {
       <path d="M86 90 Q120 108 154 90 M90 126 Q120 112 152 128" {...line(1.6)} />
     </Picture>
   ),
-  truskawkowy: ({ label }) => (
-    <Picture label={label}>
-      <path d="M48 118 Q120 70 192 118 Q168 162 120 162 Q72 162 48 118 Z" {...ink(2.4)} />
-      <path d="M120 70 C 88 48, 78 36, 100 22 C 112 46, 132 46, 146 22 C 168 36, 154 50, 120 70 Z" {...ink(2.2)} />
-      <circle cx="96" cy="120" r="5" {...line(1.6)} />
-      <circle cx="128" cy="112" r="5" {...line(1.6)} />
-      <circle cx="146" cy="128" r="5" {...line(1.6)} />
-    </Picture>
-  ),
   bananowiec: ({ label }) => (
     <Picture label={label}>
       <path d="M116 164 V78" {...line(2.6)} />
@@ -28,21 +19,13 @@ export const hardScenes: Record<string, SceneCmp> = {
       <path d="M136 120 Q158 100 146 84 Q122 104 130 124 Z" {...ink(2)} />
     </Picture>
   ),
-  salaterka: ({ label }) => (
+  salatera: ({ label }) => (
     <Picture label={label}>
       <path d="M32 84 H208 L180 146 Q120 168 60 146 Z" {...ink(2.5)} />
       <ellipse cx="120" cy="84" rx="88" ry="16" {...ink(2.2)} />
       <circle cx="90" cy="110" r="12" {...line(1.8)} />
       <circle cx="124" cy="118" r="14" {...line(1.8)} />
       <path d="M150 104 Q168 96 162 120" {...line(1.8)} />
-    </Picture>
-  ),
-  pomidorowy: ({ label }) => (
-    <Picture label={label}>
-      <path d="M44 96 H196 L174 148 Q120 168 66 148 Z" {...ink(2.5)} />
-      <circle cx="120" cy="64" r="30" {...ink(2.3)} />
-      <path d="M106 38 Q120 22 136 40" {...ink(1.8)} />
-      <path d="M80 112 Q120 128 160 112" {...line(1.8)} />
     </Picture>
   ),
   radiowoz: ({ label }) => (
@@ -52,16 +35,6 @@ export const hardScenes: Record<string, SceneCmp> = {
       <path d="M100 64 H146 V80 H100 Z" {...ink(2)} />
       <circle cx="70" cy="132" r="16" {...ink(2.2)} />
       <circle cx="178" cy="132" r="16" {...ink(2.2)} />
-    </Picture>
-  ),
-  helikopterowy: ({ label }) => (
-    <Picture label={label}>
-      <ellipse cx="124" cy="104" rx="58" ry="32" {...ink(2.4)} />
-      <path d="M124 72 V28 M36 28 H214" {...line(2.6)} />
-      <path d="M66 104 H28 M28 88 V122" {...line(2.2)} />
-      <path d="M96 104 H160 V122 H96 Z" {...line(1.8)} />
-      <path d="M100 136 L88 164 M150 136 L162 164" {...line(2.2)} />
-      <ellipse cx="124" cy="164" rx="36" ry="8" {...line(1.8)} />
     </Picture>
   ),
   rowerzysta: ({ label }) => (
@@ -74,7 +47,7 @@ export const hardScenes: Record<string, SceneCmp> = {
       <path d="M118 74 L106 108 M112 86 L146 78" {...line(2.2)} />
     </Picture>
   ),
-  samochodzik: ({ label }) => (
+  samochod: ({ label }) => (
     <Picture label={label}>
       <path d="M36 112 Q44 78 86 76 L112 50 H160 L186 78 H210 V126 H36 Z" {...ink(2.5)} />
       <circle cx="74" cy="130" r="16" {...ink(2.2)} />
@@ -90,40 +63,12 @@ export const hardScenes: Record<string, SceneCmp> = {
       <path d="M40 150 H200 V162 H40 Z" {...ink(2)} />
     </Picture>
   ),
-  temperaturka: ({ label }) => (
-    <Picture label={label}>
-      <path d="M108 28 H132 V118" {...line(2.5)} />
-      <circle cx="120" cy="138" r="24" {...ink(2.3)} />
-      <path d="M120 118 V78" {...line(2.4)} />
-      <path d="M132 48 H146 M132 66 H142 M132 84 H146" {...line(1.6)} />
-    </Picture>
-  ),
   termometr: ({ label }) => (
     <Picture label={label}>
       <path d="M96 22 H144 V112" {...line(2.6)} />
       <circle cx="120" cy="136" r="28" {...ink(2.4)} />
       <path d="M120 112 V58" {...line(2.8)} />
       <path d="M144 42 H164 M144 62 H158 M144 82 H164" {...line(1.8)} />
-    </Picture>
-  ),
-  telewizyjny: ({ label }) => (
-    <Picture label={label}>
-      <path d="M28 40 H212 V126 H28 Z" {...ink(2.5)} />
-      <path d="M44 54 H196 V112 H44 Z" {...line(1.8)} />
-      <path d="M120 40 L96 16 M120 40 L146 16" {...line(2.2)} />
-      <path d="M88 126 L72 154 M152 126 L168 154" {...line(2.2)} />
-    </Picture>
-  ),
-  komputerowy: ({ label }) => (
-    <Picture label={label}>
-      <path d="M16 26 H138 V104 H16 Z" {...ink(2.4)} />
-      <path d="M28 38 H126 V92 H28 Z" {...line(1.7)} />
-      <path d="M62 104 L54 122 H100 L92 104" {...line(2)} />
-      <path d="M40 122 H114" {...line(2.2)} />
-      <path d="M152 36 H214 V158 H152 Z" {...ink(2.4)} />
-      <path d="M164 50 H202 V68 H164 Z" {...line(1.7)} />
-      <circle cx="183" cy="124" r="8" {...line(1.8)} />
-      <ellipse cx="78" cy="150" rx="28" ry="12" {...ink(2)} />
     </Picture>
   ),
   bibliotekarz: ({ label }) => (
@@ -138,7 +83,7 @@ export const hardScenes: Record<string, SceneCmp> = {
       <Person hair="buns" dress />
     </Picture>
   ),
-  przedszkolaczek: ({ label }) => (
+  przedszkolak: ({ label }) => (
     <Picture label={label}>
       <Person cx={104} hair="short" />
       <path d="M156 90 H194 Q206 90 206 104 V136 Q176 152 150 136 Z" {...ink(2.2)} />
@@ -185,20 +130,20 @@ export const hardScenes: Record<string, SceneCmp> = {
       <path d="M86 146 V162 M150 146 V162" {...line(2)} />
     </Picture>
   ),
-  skarpetka: ({ label }) => (
+  skarpeta: ({ label }) => (
     <Picture label={label}>
       <path d="M92 24 H148 V112 L184 136 Q156 168 104 150 L78 120 V24 Z" {...ink(2.5)} />
       <path d="M92 56 H148 M92 72 H148" {...line(1.8)} />
     </Picture>
   ),
-  pantofelek: ({ label }) => (
+  pantofel: ({ label }) => (
     <Picture label={label}>
       <path d="M28 112 Q70 64 132 96 L208 112 Q196 152 118 152 Q36 152 28 112 Z" {...ink(2.5)} />
       <path d="M132 96 Q158 68 176 98" {...line(2)} />
       <path d="M70 112 Q110 96 150 112" {...line(1.6)} />
     </Picture>
   ),
-  pizamka: ({ label }) => (
+  pizama: ({ label }) => (
     <Picture label={label}>
       <path d="M64 48 L120 78 L176 48 L192 96 V152 H48 V96 Z" {...ink(2.5)} />
       <path d="M92 78 V124 M148 78 V124" {...line(2)} />
