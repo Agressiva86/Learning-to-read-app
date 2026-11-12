@@ -223,11 +223,17 @@ export const midScenes: Record<string, SceneCmp> = {
   ),
   nozyczki: ({ label }) => (
     <Picture label={label}>
-      <circle cx="72" cy="128" r="24" {...ink(2.3)} />
-      <circle cx="118" cy="128" r="24" {...ink(2.3)} />
-      <circle cx="72" cy="128" r="10" {...line(1.8)} />
-      <circle cx="118" cy="128" r="10" {...line(1.8)} />
-      <path d="M90 112 L188 36 M104 112 L176 64" {...line(2.6)} />
+      <path d="M108 78 Q164 36 214 30 L220 48 L118 98 Z" {...ink(2.4)} />
+      <path d="M108 102 Q164 146 214 150 L220 132 L118 82 Z" {...ink(2.4)} />
+      <path d="M124 86 Q168 52 204 46 M124 94 Q168 128 204 134" {...line(1.5)} />
+      <path d="M70 58 L104 74 L110 92 L74 74 Z" {...ink(2.2)} />
+      <path d="M70 122 L104 106 L110 88 L74 106 Z" {...ink(2.2)} />
+      <circle cx="44" cy="48" r="26" {...ink(2.3)} />
+      <circle cx="44" cy="48" r="13" {...line(1.8)} />
+      <circle cx="44" cy="132" r="26" {...ink(2.3)} />
+      <circle cx="44" cy="132" r="13" {...line(1.8)} />
+      <circle cx="114" cy="90" r="9" {...ink(2.2)} />
+      <circle cx="114" cy="90" r="3" {...line(1.6)} />
     </Picture>
   ),
   piornik: ({ label }) => (
