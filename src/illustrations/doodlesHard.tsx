@@ -116,12 +116,14 @@ export const hardScenes: Record<string, SceneCmp> = {
   ),
   komputerowy: ({ label }) => (
     <Picture label={label}>
-      <path d="M28 28 H168 V108 H28 Z" {...ink(2.4)} />
-      <path d="M44 44 H152 V92 H44 Z" {...line(1.7)} />
-      <path d="M78 108 L66 132 H140 L128 108" {...line(2)} />
-      <path d="M48 132 H150" {...line(2.2)} />
-      <ellipse cx="196" cy="140" rx="24" ry="14" {...ink(2)} />
-      <path d="M184 140 H210" {...line(1.6)} />
+      <path d="M16 26 H138 V104 H16 Z" {...ink(2.4)} />
+      <path d="M28 38 H126 V92 H28 Z" {...line(1.7)} />
+      <path d="M62 104 L54 122 H100 L92 104" {...line(2)} />
+      <path d="M40 122 H114" {...line(2.2)} />
+      <path d="M152 36 H214 V158 H152 Z" {...ink(2.4)} />
+      <path d="M164 50 H202 V68 H164 Z" {...line(1.7)} />
+      <circle cx="183" cy="124" r="8" {...line(1.8)} />
+      <ellipse cx="78" cy="150" rx="28" ry="12" {...ink(2)} />
     </Picture>
   ),
   bibliotekarz: ({ label }) => (
