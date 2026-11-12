@@ -129,10 +129,16 @@ export const midScenes: Record<string, SceneCmp> = {
   ),
   komputer: ({ label }) => (
     <Picture label={label}>
-      <path d="M40 32 H200 V118 H40 Z" {...ink(2.5)} />
-      <path d="M56 48 H184 V102 H56 Z" {...line(1.8)} />
-      <path d="M96 118 L82 146 H158 L144 118" {...line(2.2)} />
-      <path d="M64 146 H176" {...line(2.4)} />
+      <path d="M18 24 H142 V108 H18 Z" {...ink(2.4)} />
+      <path d="M30 36 H130 V96 H30 Z" {...line(1.8)} />
+      <path d="M66 108 L58 126 H102 L94 108" {...line(2.2)} />
+      <path d="M42 126 H118" {...line(2.4)} />
+      <path d="M28 140 H132 V158 H28 Z" {...ink(2)} />
+      <path d="M38 146 H122 M38 152 H122" {...line(1.5)} />
+      <path d="M158 28 H222 V162 H158 Z" {...ink(2.4)} />
+      <path d="M170 42 H210 V62 H170 Z" {...line(1.7)} />
+      <path d="M170 74 H210 M170 88 H210" {...line(1.6)} />
+      <circle cx="190" cy="128" r="8" {...line(1.8)} />
     </Picture>
   ),
   telewizor: ({ label }) => (
