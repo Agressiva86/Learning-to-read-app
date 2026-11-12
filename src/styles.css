@@ -229,7 +229,22 @@ input[type="checkbox"]:indeterminate {
 .library-row { grid-template-columns: 72px minmax(0, 1fr) auto auto; }
 .word-row:hover, .library-row:hover { background: #eceef5; }
 .thumb { width: 72px; height: 54px; }
-.thumb svg, .picture-option svg, .live-card svg, .empty-sheet svg { width: 100%; height: 100%; display: block; }
+.picker .thumb {
+  box-sizing: border-box;
+  background: #fff;
+  padding: 4px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.thumb svg, .thumb img,
+.picture-option svg, .picture-option img,
+.live-card svg, .live-card img,
+.empty-sheet svg, .empty-sheet img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
 .word-copy { display: flex; flex-direction: column; min-width: 0; }
 .word-name { font-weight: 500; letter-spacing: -0.02em; }
 .syl-mini { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
@@ -304,7 +319,7 @@ input[type="checkbox"]:indeterminate {
   background: var(--blue);
   box-shadow: none;
 }
-.empty-sheet svg { width: min(220px, 70%); height: auto; margin: 0 auto 12px; }
+.empty-sheet svg, .empty-sheet img { width: min(220px, 70%); height: auto; margin: 0 auto 12px; }
 
 .sheet-frame {
   width: calc(210mm * var(--sheet-scale));
@@ -394,7 +409,7 @@ input[type="checkbox"]:indeterminate {
   min-height: 0;
   overflow: hidden;
 }
-.sheet .art svg { width: 100%; height: 100%; display: block; }
+.sheet .art svg, .sheet .art img { width: 100%; height: 100%; display: block; object-fit: contain; }
 .syl-row {
   flex: 0 0 auto;
   display: flex;
@@ -480,7 +495,7 @@ input[type="checkbox"]:indeterminate {
   text-align: center;
   font-size: 14px;
 }
-.picture-option svg { height: 72px; }
+.picture-option svg, .picture-option img { height: 72px; }
 .picture-option input { position: absolute; opacity: 0; }
 .picture-option.is-on { box-shadow: inset 0 0 0 2px var(--ink); }
 
