@@ -156,21 +156,27 @@ export function App() {
   return (
     <div className="app">
       <header className="topbar app-chrome">
+        <HeroWave />
         <div className="brand">
-          <Mascot />
           <div>
             <p className="brand-kicker">Metoda sylabowa</p>
             <h1>Sylabowo</h1>
+            <p className="hero-lead">Ułóż kartkę do czytania i kolorowania.</p>
           </div>
         </div>
-        <nav className="tabs" aria-label="Widoki">
-          <button type="button" className={view === "karty" ? "tab is-on" : "tab"} onClick={() => setView("karty")}>
-            Kartki do druku
-          </button>
-          <button type="button" className={view === "slowa" ? "tab is-on" : "tab"} onClick={() => setView("slowa")}>
-            Słowa
-          </button>
-        </nav>
+        <div className="topbar-side">
+          <span className="avatar" aria-hidden="true">
+            <Mascot />
+          </span>
+          <nav className="tabs" aria-label="Widoki">
+            <button type="button" className={view === "karty" ? "tab is-on" : "tab"} onClick={() => setView("karty")}>
+              Kartki do druku
+            </button>
+            <button type="button" className={view === "slowa" ? "tab is-on" : "tab"} onClick={() => setView("slowa")}>
+              Słowa
+            </button>
+          </nav>
+        </div>
       </header>
 
       {view === "karty" ? (
@@ -315,7 +321,13 @@ export function App() {
                       />
                     </div>
                     <button type="button" className="sheet-download app-chrome" onClick={() => download(index)} disabled={busy !== null}>
-                      Pobierz tę kartkę
+                      <span className="sheet-download-icon" aria-hidden="true">
+                        <DownloadIcon />
+                      </span>
+                      <span className="sheet-download-copy">
+                        <span className="sheet-download-title">Pobierz tę kartkę</span>
+                        <span className="sheet-download-meta">Plik PDF, format A4</span>
+                      </span>
                     </button>
                   </div>
                 ))}
@@ -444,6 +456,30 @@ function FilterButton({
       {label}
       <span>{count}</span>
     </label>
+  );
+}
+
+function DownloadIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path d="M12 4v9.2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M8.2 10.4 12 14.2l3.8-3.8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 18.5h14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function HeroWave() {
+  return (
+    <svg className="hero-wave" viewBox="0 0 800 240" preserveAspectRatio="none" aria-hidden="true">
+      <g fill="none" stroke="rgba(255,255,255,0.42)" strokeWidth="1.15">
+        <path d="M-20 62c90-46 150 34 246 8 98-26 150-74 252-48 86 22 150 8 230-22" />
+        <path d="M-20 92c96-40 158 26 252 4 102-24 156-66 260-42 84 18 156 10 236-18" />
+        <path d="M-20 122c104-36 166 18 260 0 106-22 164-58 270-36 80 16 158 12 242-14" />
+        <path d="M-20 152c112-32 174 12 268-4 110-20 172-50 278-30 78 14 160 14 250-10" />
+        <path d="M80 46c74-28 128 22 210 6 90-18 136-50 228-34" />
+      </g>
+    </svg>
   );
 }
 
