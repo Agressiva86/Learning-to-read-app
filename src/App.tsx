@@ -156,21 +156,27 @@ export function App() {
   return (
     <div className="app">
       <header className="topbar app-chrome">
+        <HeroWave />
         <div className="brand">
-          <Mascot />
           <div>
             <p className="brand-kicker">Metoda sylabowa</p>
             <h1>Sylabowo</h1>
+            <p className="hero-lead">Ułóż kartkę do czytania i kolorowania.</p>
           </div>
         </div>
-        <nav className="tabs" aria-label="Widoki">
-          <button type="button" className={view === "karty" ? "tab is-on" : "tab"} onClick={() => setView("karty")}>
-            Kartki do druku
-          </button>
-          <button type="button" className={view === "slowa" ? "tab is-on" : "tab"} onClick={() => setView("slowa")}>
-            Słowa
-          </button>
-        </nav>
+        <div className="topbar-side">
+          <span className="avatar" aria-hidden="true">
+            <Mascot />
+          </span>
+          <nav className="tabs" aria-label="Widoki">
+            <button type="button" className={view === "karty" ? "tab is-on" : "tab"} onClick={() => setView("karty")}>
+              Kartki do druku
+            </button>
+            <button type="button" className={view === "slowa" ? "tab is-on" : "tab"} onClick={() => setView("slowa")}>
+              Słowa
+            </button>
+          </nav>
+        </div>
       </header>
 
       {view === "karty" ? (
@@ -444,6 +450,20 @@ function FilterButton({
       {label}
       <span>{count}</span>
     </label>
+  );
+}
+
+function HeroWave() {
+  return (
+    <svg className="hero-wave" viewBox="0 0 800 240" preserveAspectRatio="none" aria-hidden="true">
+      <g fill="none" stroke="rgba(255,255,255,0.42)" strokeWidth="1.15">
+        <path d="M-20 62c90-46 150 34 246 8 98-26 150-74 252-48 86 22 150 8 230-22" />
+        <path d="M-20 92c96-40 158 26 252 4 102-24 156-66 260-42 84 18 156 10 236-18" />
+        <path d="M-20 122c104-36 166 18 260 0 106-22 164-58 270-36 80 16 158 12 242-14" />
+        <path d="M-20 152c112-32 174 12 268-4 110-20 172-50 278-30 78 14 160 14 250-10" />
+        <path d="M80 46c74-28 128 22 210 6 90-18 136-50 228-34" />
+      </g>
+    </svg>
   );
 }
 

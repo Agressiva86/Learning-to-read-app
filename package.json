@@ -10,8 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fontsource/andika": "^5.3.0",
-    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/google-sans": "^5.3.2",
     "html-to-image": "^1.11.13",
     "jspdf": "^2.5.2",
     "react": "^19.3.1",
