@@ -1,187 +1,207 @@
 import { ink, line } from "./draw";
-import { Car, Pal, Picture, eyes, face, type SceneCmp } from "./kit";
+import { Face, Person, Picture, type SceneCmp } from "./kit";
 
 export const hardScenes: Record<string, SceneCmp> = {
   pomarancza: ({ label }) => (
     <Picture label={label}>
-      <circle cx="120" cy="104" r="50" {...ink(2.6)} />
-      <path d="M120 54 V40 M104 62 L96 46 M136 62 L146 46" {...line(2.2)} />
-      {face(120, 106, 0.9)}
+      <circle cx="120" cy="108" r="54" {...ink(2.5)} />
+      <path d="M120 54 V34" {...line(2.2)} />
+      <path d="M100 64 Q120 46 144 66" {...ink(2)} />
+      <path d="M86 90 Q120 108 154 90 M90 126 Q120 112 152 128" {...line(1.6)} />
     </Picture>
   ),
   truskawkowy: ({ label }) => (
     <Picture label={label}>
-      <path d="M70 120 Q120 70 170 120 Q150 158 120 158 Q90 158 70 120 Z" {...ink(2.6)} />
-      <path d="M120 70 C 90 50, 78 40, 96 28 C 108 48, 132 48, 144 28 C 162 40, 150 50, 120 70 Z" {...ink(2.4)} />
-      {face(120, 118, 0.7)}
+      <path d="M48 118 Q120 70 192 118 Q168 162 120 162 Q72 162 48 118 Z" {...ink(2.4)} />
+      <path d="M120 70 C 88 48, 78 36, 100 22 C 112 46, 132 46, 146 22 C 168 36, 154 50, 120 70 Z" {...ink(2.2)} />
+      <circle cx="96" cy="120" r="5" {...line(1.6)} />
+      <circle cx="128" cy="112" r="5" {...line(1.6)} />
+      <circle cx="146" cy="128" r="5" {...line(1.6)} />
     </Picture>
   ),
   bananowiec: ({ label }) => (
     <Picture label={label}>
-      <path d="M118 160 V70" {...line(2.8)} />
-      <path d="M118 80 Q70 40 48 78 Q90 70 118 90" {...ink(2.4)} />
-      <path d="M118 74 Q170 30 196 72 Q150 68 118 88" {...ink(2.4)} />
-      <path d="M100 110 Q86 96 96 86 Q112 98 108 112 Z" {...ink(2.2)} />
-      <path d="M132 118 Q150 100 142 88 Q124 104 128 120 Z" {...ink(2.2)} />
+      <path d="M116 164 V78" {...line(2.6)} />
+      <path d="M116 90 Q60 40 36 86 Q86 78 116 100" {...ink(2.3)} />
+      <path d="M116 82 Q176 28 208 78 Q150 74 116 98" {...ink(2.3)} />
+      <path d="M96 112 Q78 96 92 82 Q112 98 104 116 Z" {...ink(2)} />
+      <path d="M136 120 Q158 100 146 84 Q122 104 130 124 Z" {...ink(2)} />
     </Picture>
   ),
   salaterka: ({ label }) => (
     <Picture label={label}>
-      <path d="M40 90 H200 L176 140 Q120 160 64 140 Z" {...ink(2.6)} />
-      <circle cx="96" cy="108" r="10" {...line(2)} />
-      <circle cx="128" cy="116" r="12" {...line(2)} />
-      <circle cx="156" cy="106" r="9" {...line(2)} />
+      <path d="M32 84 H208 L180 146 Q120 168 60 146 Z" {...ink(2.5)} />
+      <ellipse cx="120" cy="84" rx="88" ry="16" {...ink(2.2)} />
+      <circle cx="90" cy="110" r="12" {...line(1.8)} />
+      <circle cx="124" cy="118" r="14" {...line(1.8)} />
+      <path d="M150 104 Q168 96 162 120" {...line(1.8)} />
     </Picture>
   ),
   pomidorowy: ({ label }) => (
     <Picture label={label}>
-      <path d="M52 96 H188 L170 146 Q120 164 70 146 Z" {...ink(2.6)} />
-      <circle cx="120" cy="70" r="28" {...ink(2.4)} />
-      <path d="M108 46 Q120 32 134 48" {...line(2)} />
-      {face(120, 72, 0.55)}
+      <path d="M44 96 H196 L174 148 Q120 168 66 148 Z" {...ink(2.5)} />
+      <circle cx="120" cy="64" r="30" {...ink(2.3)} />
+      <path d="M106 38 Q120 22 136 40" {...ink(1.8)} />
+      <path d="M80 112 Q120 128 160 112" {...line(1.8)} />
     </Picture>
   ),
   radiowoz: ({ label }) => (
     <Picture label={label}>
-      <Car lamp />
-      <path d="M104 62 H140 V78 H104 Z" {...ink(2.2)} />
+      <path d="M24 112 Q32 80 74 78 L102 50 H162 L190 80 H220 V128 H24 Z" {...ink(2.5)} />
+      <path d="M108 54 V82 H164" {...line(1.8)} />
+      <path d="M100 64 H146 V80 H100 Z" {...ink(2)} />
+      <circle cx="70" cy="132" r="16" {...ink(2.2)} />
+      <circle cx="178" cy="132" r="16" {...ink(2.2)} />
     </Picture>
   ),
   helikopterowy: ({ label }) => (
     <Picture label={label}>
-      <ellipse cx="124" cy="100" rx="54" ry="30" {...ink(2.6)} />
-      <path d="M124 70 V36 M48 36 H206" {...line(2.7)} />
-      <path d="M70 100 H36 M36 86 V116" {...line(2.4)} />
-      <path d="M150 128 L140 156 M110 128 L100 156" {...line(2.3)} />
-      {face(124, 100, 0.7)}
+      <ellipse cx="124" cy="104" rx="58" ry="32" {...ink(2.4)} />
+      <path d="M124 72 V28 M36 28 H214" {...line(2.6)} />
+      <path d="M66 104 H28 M28 88 V122" {...line(2.2)} />
+      <path d="M96 104 H160 V122 H96 Z" {...line(1.8)} />
+      <path d="M100 136 L88 164 M150 136 L162 164" {...line(2.2)} />
+      <ellipse cx="124" cy="164" rx="36" ry="8" {...line(1.8)} />
     </Picture>
   ),
   rowerzysta: ({ label }) => (
     <Picture label={label}>
-      <circle cx="64" cy="132" r="26" {...ink(2.4)} />
-      <circle cx="176" cy="132" r="26" {...ink(2.4)} />
-      <path d="M64 132 L110 86 L176 132" {...line(2.5)} />
-      <circle cx="118" cy="62" r="16" {...ink(2.3)} />
-      {face(118, 62, 0.5)}
-      <path d="M118 78 L108 108" {...line(2.4)} />
+      <circle cx="62" cy="132" r="28" {...ink(2.3)} />
+      <circle cx="178" cy="132" r="28" {...ink(2.3)} />
+      <path d="M62 132 L112 86 L178 132" {...line(2.3)} />
+      <circle cx="118" cy="58" r="16" {...ink(2.2)} />
+      <Face cx={118} cy={58} s={0.6} />
+      <path d="M118 74 L106 108 M112 86 L146 78" {...line(2.2)} />
     </Picture>
   ),
   samochodzik: ({ label }) => (
     <Picture label={label}>
-      <Car />
-      {face(118, 92, 0.55)}
+      <path d="M36 112 Q44 78 86 76 L112 50 H160 L186 78 H210 V126 H36 Z" {...ink(2.5)} />
+      <circle cx="74" cy="130" r="16" {...ink(2.2)} />
+      <circle cx="170" cy="130" r="16" {...ink(2.2)} />
+      <path d="M116 56 V80 H156" {...line(1.8)} />
+      <circle cx="196" cy="96" r="5" {...line(1.6)} />
     </Picture>
   ),
   kaloryfer: ({ label }) => (
     <Picture label={label}>
-      <path d="M48 40 H192 V148 H48 Z" {...ink(2.6)} />
-      <path d="M72 40 V148 M96 40 V148 M120 40 V148 M144 40 V148 M168 40 V148" {...line(2.2)} />
+      <path d="M40 36 H200 V150 H40 Z" {...ink(2.5)} />
+      <path d="M64 36 V150 M88 36 V150 M112 36 V150 M136 36 V150 M160 36 V150 M184 36 V150" {...line(2)} />
+      <path d="M40 150 H200 V162 H40 Z" {...ink(2)} />
     </Picture>
   ),
   temperaturka: ({ label }) => (
     <Picture label={label}>
-      <path d="M108 36 H132 V120" {...line(2.6)} />
-      <circle cx="120" cy="138" r="22" {...ink(2.5)} />
-      <path d="M120 120 V86" {...line(2.4)} />
+      <path d="M108 28 H132 V118" {...line(2.5)} />
+      <circle cx="120" cy="138" r="24" {...ink(2.3)} />
+      <path d="M120 118 V78" {...line(2.4)} />
+      <path d="M132 48 H146 M132 66 H142 M132 84 H146" {...line(1.6)} />
     </Picture>
   ),
   termometr: ({ label }) => (
     <Picture label={label}>
-      <path d="M100 28 H140 V118" {...line(2.8)} />
-      <circle cx="120" cy="140" r="26" {...ink(2.6)} />
-      <path d="M120 118 V70" {...line(3)} />
-      <path d="M140 48 H156 M140 68 H152 M140 88 H156" {...line(2)} />
+      <path d="M96 22 H144 V112" {...line(2.6)} />
+      <circle cx="120" cy="136" r="28" {...ink(2.4)} />
+      <path d="M120 112 V58" {...line(2.8)} />
+      <path d="M144 42 H164 M144 62 H158 M144 82 H164" {...line(1.8)} />
     </Picture>
   ),
   telewizyjny: ({ label }) => (
     <Picture label={label}>
-      <path d="M36 44 H204 V128 H36 Z" {...ink(2.6)} />
-      <path d="M70 128 L54 152 M170 128 L186 152" {...line(2.4)} />
-      <path d="M120 44 L96 22 M120 44 L146 20" {...line(2.3)} />
-      {face(120, 86, 0.85)}
+      <path d="M28 40 H212 V126 H28 Z" {...ink(2.5)} />
+      <path d="M44 54 H196 V112 H44 Z" {...line(1.8)} />
+      <path d="M120 40 L96 16 M120 40 L146 16" {...line(2.2)} />
+      <path d="M88 126 L72 154 M152 126 L168 154" {...line(2.2)} />
     </Picture>
   ),
   komputerowy: ({ label }) => (
     <Picture label={label}>
-      <path d="M40 36 H176 V112 H40 Z" {...ink(2.6)} />
-      <path d="M90 112 L78 136 H150 L138 112" {...line(2.3)} />
-      <ellipse cx="196" cy="140" rx="22" ry="12" {...ink(2.2)} />
-      {face(108, 74, 0.7)}
+      <path d="M28 28 H168 V108 H28 Z" {...ink(2.4)} />
+      <path d="M44 44 H152 V92 H44 Z" {...line(1.7)} />
+      <path d="M78 108 L66 132 H140 L128 108" {...line(2)} />
+      <path d="M48 132 H150" {...line(2.2)} />
+      <ellipse cx="196" cy="140" rx="24" ry="14" {...ink(2)} />
+      <path d="M184 140 H210" {...line(1.6)} />
     </Picture>
   ),
   bibliotekarz: ({ label }) => (
     <Picture label={label}>
-      <Pal arm="down" cx={100} />
-      <path d="M156 70 H198 V130 H156 Z" {...ink(2.3)} />
-      <path d="M156 90 H198 M156 108 H198" {...line(1.8)} />
+      <Person cx={96} hair="short" />
+      <path d="M158 78 H206 V136 H158 Z" {...ink(2.2)} />
+      <path d="M158 98 H206 M158 116 H206" {...line(1.6)} />
     </Picture>
   ),
   nauczycielka: ({ label }) => (
     <Picture label={label}>
-      <Pal dress buns arm="wave" />
+      <Person hair="buns" dress />
     </Picture>
   ),
   przedszkolaczek: ({ label }) => (
     <Picture label={label}>
-      <Pal cx={108} hy={64} arm="down" />
-      <path d="M150 96 H186 Q196 96 196 108 V136 Q168 150 148 136 Z" {...ink(2.3)} />
+      <Person cx={104} hair="short" />
+      <path d="M156 90 H194 Q206 90 206 104 V136 Q176 152 150 136 Z" {...ink(2.2)} />
     </Picture>
   ),
   czarodziejka: ({ label }) => (
     <Picture label={label}>
-      <Pal dress arm="wave" />
-      <path d="M96 34 L120 4 L144 34 Z" {...ink(2.4)} />
-      <path d="M168 70 L196 40" {...line(2.4)} />
-      <path d="M196 40 L188 48 L204 46 L192 54 L202 60 L188 56 Z" {...ink(2)} />
+      <Person hair="bob" dress hat="wizard" />
+      <path d="M168 78 L204 42" {...line(2.2)} />
+      <path d="M204 42 L194 52 L214 50 L198 58 L212 66 L194 60 Z" {...ink(2)} />
     </Picture>
   ),
   krolewna: ({ label }) => (
     <Picture label={label}>
-      <Pal dress buns arm="wave" />
-      <path d="M96 30 L108 14 L120 32 L132 12 L144 30 Z" {...ink(2.3)} />
+      <Person hair="buns" dress hat="crown" />
     </Picture>
   ),
   rycerz: ({ label }) => (
     <Picture label={label}>
-      <path d="M96 70 H148 L140 36 H104 Z" {...ink(2.5)} />
-      <path d="M110 70 V150 M134 70 V150" {...line(2.6)} />
-      <path d="M78 96 H168 V140 H78 Z" {...ink(2.4)} />
-      <path d="M108 108 H138 V128 H108 Z" {...line(2)} />
+      <path d="M92 64 H148 L140 28 H100 Z" {...ink(2.4)} />
+      <path d="M108 48 H132" {...line(1.8)} />
+      <path d="M100 64 H140 V112 H100 Z" {...ink(2.3)} />
+      <path d="M86 78 H156 V128 H86 Z" {...ink(2.3)} />
+      <path d="M108 92 H134 V116 H108 Z" {...line(1.8)} />
+      <path d="M104 128 V156 M136 128 V156" {...line(2.2)} />
     </Picture>
   ),
   zamek: ({ label }) => (
     <Picture label={label}>
-      <path d="M40 70 H80 V150 H40 Z M100 48 H140 V150 H100 Z M160 70 H200 V150 H160 Z" {...ink(2.5)} />
-      <path d="M40 70 V48 H56 V70 M64 70 V48 H80 V70 M160 70 V48 H176 V70 M184 70 V48 H200 V70" {...line(2.2)} />
-      <path d="M112 150 V112 H128 V150" {...ink(2.2)} />
+      <path d="M28 78 H72 V156 H28 Z M92 40 H148 V156 H92 Z M168 78 H212 V156 H168 Z" {...ink(2.4)} />
+      <path d="M28 78 V52 H44 V78 M56 78 V52 H72 V78 M168 78 V52 H184 V78 M196 78 V52 H212 V78" {...line(2)} />
+      <path d="M108 156 V116 H132 V156" {...ink(2)} />
+      <path d="M108 70 H132 V90 H108 Z" {...line(1.6)} />
     </Picture>
   ),
   skarbonka: ({ label }) => (
     <Picture label={label}>
-      <ellipse cx="120" cy="108" rx="62" ry="40" {...ink(2.6)} />
-      <path d="M96 78 H144" {...line(2.4)} />
-      {eyes(112, 104, 14, 3.2)}
-      <ellipse cx="168" cy="112" rx="12" ry="8" {...ink(2)} />
-      <path d="M70 100 Q48 90 56 112" {...line(2.3)} />
+      <ellipse cx="118" cy="108" rx="64" ry="42" {...ink(2.5)} />
+      <path d="M90 78 H150" {...line(2.2)} />
+      <circle cx="100" cy="104" r="4" {...line(1.6)} />
+      <circle cx="124" cy="104" r="4" {...line(1.6)} />
+      <ellipse cx="150" cy="118" rx="12" ry="8" {...ink(1.8)} />
+      <path d="M62 100 Q36 88 46 116" {...line(2)} />
+      <path d="M86 146 V162 M150 146 V162" {...line(2)} />
     </Picture>
   ),
   skarpetka: ({ label }) => (
     <Picture label={label}>
-      <path d="M96 28 H150 V110 L176 132 Q150 164 108 148 L88 120 V28 Z" {...ink(2.6)} />
-      <path d="M96 56 H150" {...line(2.2)} />
+      <path d="M92 24 H148 V112 L184 136 Q156 168 104 150 L78 120 V24 Z" {...ink(2.5)} />
+      <path d="M92 56 H148 M92 72 H148" {...line(1.8)} />
     </Picture>
   ),
   pantofelek: ({ label }) => (
     <Picture label={label}>
-      <path d="M36 110 Q70 70 130 96 L200 110 Q190 146 120 146 Q50 146 36 110 Z" {...ink(2.6)} />
-      <path d="M130 96 Q150 70 168 96" {...line(2.3)} />
+      <path d="M28 112 Q70 64 132 96 L208 112 Q196 152 118 152 Q36 152 28 112 Z" {...ink(2.5)} />
+      <path d="M132 96 Q158 68 176 98" {...line(2)} />
+      <path d="M70 112 Q110 96 150 112" {...line(1.6)} />
     </Picture>
   ),
   pizamka: ({ label }) => (
     <Picture label={label}>
-      <path d="M70 48 L120 78 L170 48 L184 90 V150 H56 V90 Z" {...ink(2.6)} />
-      <path d="M96 70 V120 M144 70 V120" {...line(2.2)} />
-      {eyes(120, 108, 12, 3)}
+      <path d="M64 48 L120 78 L176 48 L192 96 V152 H48 V96 Z" {...ink(2.5)} />
+      <path d="M92 78 V124 M148 78 V124" {...line(2)} />
+      <path d="M48 152 H100 V168 H48 Z M140 152 H192 V168 H140 Z" {...ink(2)} />
+      <path d="M108 100 H132" {...line(1.6)} />
     </Picture>
   ),
 };
