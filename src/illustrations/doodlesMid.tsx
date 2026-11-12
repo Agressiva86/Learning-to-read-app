@@ -191,7 +191,7 @@ export const midScenes: Record<string, SceneCmp> = {
       <path d="M96 48 H86 M148 48 H160" {...line(2)} />
     </Picture>
   ),
-  parasolka: ({ label }) => (
+  parasol: ({ label }) => (
     <Picture label={label}>
       <path d="M28 100 Q120 16 212 100 Z" {...ink(2.6)} />
       <path d="M74 100 Q96 70 120 100 M120 100 Q144 70 166 100" {...line(1.8)} />
@@ -243,7 +243,7 @@ export const midScenes: Record<string, SceneCmp> = {
       <path d="M168 72 V48 H196 V72" {...line(2)} />
     </Picture>
   ),
-  plecaczek: ({ label }) => (
+  plecak: ({ label }) => (
     <Picture label={label}>
       <path d="M64 64 H176 Q194 64 194 82 V136 Q120 164 46 136 V82 Q46 64 64 64 Z" {...ink(2.5)} />
       <path d="M88 64 V40 H152 V64" {...line(2.3)} />
@@ -300,7 +300,7 @@ export const midScenes: Record<string, SceneCmp> = {
       <circle cx="126" cy="38" r="2" {...line(1.4)} />
     </Picture>
   ),
-  motylek: ({ label }) => (
+  motyl: ({ label }) => (
     <Picture label={label}>
       <ellipse cx="74" cy="84" rx="40" ry="30" {...ink(2.3)} />
       <ellipse cx="166" cy="84" rx="40" ry="30" {...ink(2.3)} />
@@ -311,7 +311,7 @@ export const midScenes: Record<string, SceneCmp> = {
       <path d="M112 40 Q104 24 116 30 M128 40 Q138 24 126 30" {...line(1.6)} />
     </Picture>
   ),
-  slimaczek: ({ label }) => (
+  slimak: ({ label }) => (
     <Picture label={label}>
       <path d="M36 136 Q90 136 112 118" {...line(2.4)} />
       <circle cx="142" cy="96" r="40" {...ink(2.4)} />
@@ -332,7 +332,7 @@ export const midScenes: Record<string, SceneCmp> = {
       <path d="M90 146 V164 M130 148 V166" {...line(2)} />
     </Picture>
   ),
-  jezyk: ({ label }) => (
+  jez: ({ label }) => (
     <Picture label={label}>
       <ellipse cx="120" cy="112" rx="52" ry="38" {...ink(2.5)} />
       <path d="M78 96 L64 62 M98 80 L92 46 M122 74 L124 40 M148 80 L156 48 M168 98 L190 66" {...line(2.2)} />

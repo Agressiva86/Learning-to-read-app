@@ -268,7 +268,7 @@ export const easyScenes: Record<string, SceneCmp> = {
       <path d="M40 96 V70 H90 V96" {...ink(2)} />
     </Picture>
   ),
-  kwiatek: ({ label }) => (
+  kwiat: ({ label }) => (
     <Picture label={label}>
       <path d="M96 168 V92 H144 V168" {...ink(2.2)} />
       <path d="M88 168 H152 V156 H88 Z" {...ink(2)} />
@@ -301,7 +301,7 @@ export const easyScenes: Record<string, SceneCmp> = {
       <path d="M104 80 Q120 96 136 80" {...line(1.8)} />
     </Picture>
   ),
-  zabaweczka: ({ label }) => (
+  zabawka: ({ label }) => (
     <Picture label={label}>
       <circle cx="86" cy="70" r="26" {...ink(2.3)} />
       <circle cx="154" cy="70" r="26" {...ink(2.3)} />
