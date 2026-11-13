@@ -56,9 +56,6 @@ function WordPractice({
 
   return (
     <div className="practice">
-      <p className="solid-word" style={{ fontSize: `${wordSize}pt` }}>
-        {word}
-      </p>
       <p className="trace-line" aria-hidden="true">
         <span className="trace-word" style={{ fontSize: `${wordSize}pt` }}>
           {word}
