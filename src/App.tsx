@@ -89,12 +89,8 @@ export function App() {
     setSelected(new Set(words.map((word) => word.id)));
   }
 
-  function clearVisible() {
-    setSelected((current) => {
-      const next = new Set(current);
-      for (const word of visible) next.delete(word.id);
-      return next;
-    });
+  function clearAll() {
+    setSelected(new Set());
   }
 
   function persist(next: WordEntry[]) {
@@ -200,7 +196,7 @@ export function App() {
             </div>
             <div className="picker-actions">
               <button type="button" className="btn btn-ghost" onClick={selectAll}>Zaznacz wszystkie</button>
-              <button type="button" className="btn btn-ghost" onClick={clearVisible}>Odznacz widoczne</button>
+              <button type="button" className="btn btn-ghost" onClick={clearAll}>Odznacz wszystkie</button>
             </div>
             <div className="groups">
               {DIFFICULTY_ORDER.map((level) => {
