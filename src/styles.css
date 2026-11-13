@@ -410,13 +410,6 @@ input[type="checkbox"]:indeterminate {
   gap: 1.2mm;
   min-width: 0;
 }
-.solid-word {
-  margin: 0;
-  text-align: center;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.01em;
-}
 .trace-line {
   box-sizing: border-box;
   margin: 0;
