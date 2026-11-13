@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Illustration } from "./components/Illustration";
 import { Sheet } from "./components/Sheet";
+import { SyllableView } from "./components/SyllableView";
 import { WordForm } from "./components/WordForm";
 import type { WordEntry } from "./data/words";
 import { mergeWords } from "./data/words";
@@ -15,7 +16,7 @@ import { buildPages } from "./lib/pages";
 import { foldPolish } from "./lib/syllables";
 import { loadCustomWords, saveCustomWords } from "./lib/storage";
 
-type View = "karty" | "slowa";
+type View = "karty" | "slowa" | "sylaby";
 type Filter = "wszystkie" | Difficulty;
 
 const STARTER = ["mama", "tata", "woda", "mleko"];
@@ -162,11 +163,16 @@ export function App() {
             <button type="button" className={view === "slowa" ? "tab is-on" : "tab"} onClick={() => setView("slowa")}>
               Słowa
             </button>
+            <button type="button" className={view === "sylaby" ? "tab is-on" : "tab"} onClick={() => setView("sylaby")}>
+              Sylaby
+            </button>
           </nav>
         </div>
       </header>
 
-      {view === "karty" ? (
+      {view === "sylaby" ? (
+        <SyllableView busy={busy} setBusy={setBusy} setNotice={setNotice} />
+      ) : view === "karty" ? (
         <main className="workspace">
           <section className="picker app-chrome" aria-label="Wybór słów">
             <div className="picker-head">
