@@ -85,12 +85,8 @@ export function App() {
     });
   }
 
-  function selectVisible() {
-    setSelected((current) => {
-      const next = new Set(current);
-      for (const word of visible) next.add(word.id);
-      return next;
-    });
+  function selectAll() {
+    setSelected(new Set(words.map((word) => word.id)));
   }
 
   function clearVisible() {
@@ -203,7 +199,7 @@ export function App() {
               ))}
             </div>
             <div className="picker-actions">
-              <button type="button" className="btn btn-ghost" onClick={selectVisible}>Zaznacz widoczne</button>
+              <button type="button" className="btn btn-ghost" onClick={selectAll}>Zaznacz wszystkie</button>
               <button type="button" className="btn btn-ghost" onClick={clearVisible}>Odznacz widoczne</button>
             </div>
             <div className="groups">
