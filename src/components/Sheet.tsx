@@ -1,5 +1,5 @@
 import type { WordEntry } from "../data/words";
-import { pageLevelLabel, type SheetDensity } from "../lib/pages";
+import { pageLevelLabel } from "../lib/pages";
 import { Illustration } from "./Illustration";
 import { SyllableRow } from "./SyllableRow";
 
@@ -9,16 +9,14 @@ export function Sheet({
   words,
   page,
   total,
-  density,
 }: {
   words: WordEntry[];
   page: number;
   total: number;
-  density: SheetDensity;
 }) {
   const rows = Math.max(1, Math.ceil(words.length / 2));
   return (
-    <article className={`sheet density-${density}`} lang="pl">
+    <article className="sheet" lang="pl">
       <header className="sheet-head">
         <strong>Czytam sylabami</strong>
         <span>{pageLevelLabel(words)}</span>
@@ -32,7 +30,7 @@ export function Sheet({
             <div className="art">
               <Illustration id={word.illustration} label={word.word} />
             </div>
-            <WordPractice word={word.word} syllables={word.syllables} density={density} />
+            <WordPractice word={word.word} syllables={word.syllables} />
           </div>
         ))}
       </div>
@@ -41,18 +39,10 @@ export function Sheet({
   );
 }
 
-function WordPractice({
-  word,
-  syllables,
-  density,
-}: {
-  word: string;
-  syllables: string[];
-  density: SheetDensity;
-}) {
+function WordPractice({ word, syllables }: { word: string; syllables: string[] }) {
   const letters = Array.from(word);
-  const wordSize = textSize(word.length, density, density === 4 ? 18 : 14);
-  const letterSize = textSize(letters.length, density, density === 4 ? 13 : 10);
+  const wordSize = textSize(word.length, 18);
+  const letterSize = textSize(letters.length, 13);
 
   return (
     <div className="practice">
@@ -61,7 +51,7 @@ function WordPractice({
           {word}
         </span>
       </p>
-      <SyllableRow syllables={syllables} density={density} />
+      <SyllableRow syllables={syllables} />
       <div className={letters.length > 8 ? "letter-row many" : "letter-row"}>
         {letters.map((letter, index) => (
           <span
@@ -77,7 +67,6 @@ function WordPractice({
   );
 }
 
-function textSize(length: number, density: SheetDensity, base: number) {
-  const limit = density === 4 ? 8 : 7;
-  return Math.max(base - 4, base - Math.max(0, length - limit));
+function textSize(length: number, base: number) {
+  return Math.max(base - 4, base - Math.max(0, length - 8));
 }

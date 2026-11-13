@@ -1,16 +1,12 @@
-import type { SheetDensity } from "../lib/pages";
-
 export function SyllableRow({
   syllables,
-  density = 4,
   compact = false,
 }: {
   syllables: string[];
-  density?: SheetDensity;
   compact?: boolean;
 }) {
   const longest = syllables.reduce((max, part) => Math.max(max, part.length), 1);
-  let pt = density === 4 ? 24 : 17;
+  let pt = 24;
   if (syllables.length >= 5) pt -= 5;
   if (longest >= 5) pt -= 4;
   else if (longest >= 4) pt -= 2;

@@ -30,7 +30,7 @@ describe("zestaw startowy", () => {
 
 describe("kartki", () => {
   it("nie miesza poziomów, gdy tak ustawiono", () => {
-    const pages = buildPages(BUILTIN_WORDS, 4, true);
+    const pages = buildPages(BUILTIN_WORDS, true);
     expect(pages[0]?.map((word) => word.word)).toEqual(["mama", "tata", "dom", "kot"]);
     const flat = pages.flat();
     expect(flat).toHaveLength(94);
@@ -40,9 +40,9 @@ describe("kartki", () => {
     }
   });
 
-  it("układa sześć słów na kartce", () => {
+  it("układa cztery słowa na kartce", () => {
     const easy = BUILTIN_WORDS.filter((word) => levelOf(word) === "latwy");
-    const pages = buildPages(easy, 6, true);
-    expect(pages.map((page) => page.length)).toEqual([6, 6, 6, 6, 6, 5]);
+    const pages = buildPages(easy, true);
+    expect(pages.map((page) => page.length)).toEqual([4, 4, 4, 4, 4, 4, 4, 4, 3]);
   });
 });
