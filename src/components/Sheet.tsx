@@ -41,7 +41,7 @@ export function Sheet({
 
 function WordPractice({ word, syllables }: { word: string; syllables: string[] }) {
   const letters = Array.from(word);
-  const wordSize = textSize(word.length, 18);
+  const wordSize = textSize(word.length, 28);
   const letterSize = textSize(letters.length, 13);
 
   return (

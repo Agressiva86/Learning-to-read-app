@@ -398,9 +398,9 @@ input[type="checkbox"]:indeterminate {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 16mm;
+  height: 28mm;
   border-bottom: 0.5mm solid #8d8d94;
-  padding: 0 1mm;
+  padding: 4.5mm 2mm;
 }
 .trace-word {
   color: rgba(28, 28, 30, 0.32);
