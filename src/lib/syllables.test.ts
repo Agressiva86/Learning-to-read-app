@@ -4,7 +4,7 @@ import { difficultyOf, levelOf } from "./difficulty";
 import { buildPages } from "./pages";
 import { isPolishWord, splitSyllables, syllablesMatchWord } from "./syllables";
 
-describe("zestaw startowy", () => {
+describe("słownik", () => {
   it("ma ilustrację do każdego słowa", () => {
     expect(BUILTIN_WORDS).toHaveLength(94);
     const pictures = new Set<string>(ILLUSTRATIONS);
