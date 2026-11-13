@@ -146,28 +146,33 @@ export function App() {
 
   return (
     <div className="app">
-      <header className="topbar app-chrome">
-        <HeroWave />
-        <div className="brand">
-          <div>
-            <p className="brand-kicker">Metoda sylabowa</p>
-            <h1>Grafi</h1>
-            <p className="hero-lead">Ułóż kartkę do czytania i kolorowania.</p>
-          </div>
+      <aside className="rail app-chrome">
+        <div className="rail-logo">
+          <RailMark />
+          <strong>Grafi</strong>
         </div>
-        <div className="topbar-side">
-          <nav className="tabs" aria-label="Widoki">
-            <button type="button" className={view === "karty" ? "tab is-on" : "tab"} onClick={() => setView("karty")}>
-              Kartki do druku
-            </button>
-            <button type="button" className={view === "slowa" ? "tab is-on" : "tab"} onClick={() => setView("slowa")}>
-              Słowa
-            </button>
-            <button type="button" className={view === "sylaby" ? "tab is-on" : "tab"} onClick={() => setView("sylaby")}>
-              Sylaby
-            </button>
-          </nav>
+        <nav className="rail-nav" aria-label="Widoki">
+          <button type="button" className={view === "karty" ? "rail-item is-on" : "rail-item"} onClick={() => setView("karty")}>
+            <SheetNavIcon />
+            <span>Kartki</span>
+          </button>
+          <button type="button" className={view === "slowa" ? "rail-item is-on" : "rail-item"} onClick={() => setView("slowa")}>
+            <WordsNavIcon />
+            <span>Słowa</span>
+          </button>
+          <button type="button" className={view === "sylaby" ? "rail-item is-on" : "rail-item"} onClick={() => setView("sylaby")}>
+            <SyllableNavIcon />
+            <span>Sylaby</span>
+          </button>
+        </nav>
+      </aside>
+      <div className="shell">
+      <header className="shell-bar app-chrome">
+        <div>
+          <p className="shell-kicker">Metoda sylabowa</p>
+          <h1>Grafi</h1>
         </div>
+        <p className="shell-lead">Ułóż kartkę do czytania i kolorowania.</p>
       </header>
 
       {view === "sylaby" ? (
@@ -405,6 +410,7 @@ export function App() {
           Tworzę PDF… kartka {busy.current} z {busy.total}
         </div>
       ) : null}
+      </div>
     </div>
   );
 }
@@ -441,16 +447,38 @@ function DownloadIcon() {
   );
 }
 
-function HeroWave() {
+function RailMark() {
   return (
-    <svg className="hero-wave" viewBox="0 0 800 240" preserveAspectRatio="none" aria-hidden="true">
-      <g fill="none" stroke="rgba(255,255,255,0.42)" strokeWidth="1.15">
-        <path d="M-20 62c90-46 150 34 246 8 98-26 150-74 252-48 86 22 150 8 230-22" />
-        <path d="M-20 92c96-40 158 26 252 4 102-24 156-66 260-42 84 18 156 10 236-18" />
-        <path d="M-20 122c104-36 166 18 260 0 106-22 164-58 270-36 80 16 158 12 242-14" />
-        <path d="M-20 152c112-32 174 12 268-4 110-20 172-50 278-30 78 14 160 14 250-10" />
-        <path d="M80 46c74-28 128 22 210 6 90-18 136-50 228-34" />
-      </g>
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+      <circle cx="13" cy="16" r="7" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <circle cx="20" cy="16" r="7" fill="none" stroke="currentColor" strokeWidth="1.7" />
+    </svg>
+  );
+}
+
+function SheetNavIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <rect x="5" y="3.5" width="14" height="17" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function WordsNavIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M5 6.5h14M5 12h14M5 17.5h9" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function SyllableNavIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <rect x="3.5" y="5" width="7" height="6" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <rect x="13.5" y="5" width="7" height="6" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <rect x="8.5" y="13" width="7" height="6" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
     </svg>
   );
 }
