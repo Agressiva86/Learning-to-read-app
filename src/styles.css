@@ -282,24 +282,6 @@ input[type="checkbox"]:indeterminate {
   align-items: flex-start;
 }
 .toolbar-controls { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; justify-content: flex-end; }
-.segment {
-  border: 0;
-  border-radius: 999px;
-  display: inline-flex;
-  padding: 4px;
-  margin: 0;
-  background: var(--soft);
-}
-.segment legend {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-.segment label { border-radius: 999px; padding: 6px 14px; font-weight: 500; }
-.segment label.is-on { background: var(--ink); color: #fff; }
-.segment input { position: absolute; opacity: 0; pointer-events: none; }
 .check { display: inline-flex; gap: 8px; align-items: center; font-weight: 500; }
 
 .notice, .form-error, .form-ok, .form-note, .empty-note { margin-top: 8px; }
@@ -420,7 +402,6 @@ input[type="checkbox"]:indeterminate {
   border-bottom: 0.5mm solid #8d8d94;
   padding: 0 1mm;
 }
-.density-6 .trace-line { height: 12mm; }
 .trace-word {
   color: rgba(28, 28, 30, 0.32);
   font-family: "Playwrite HU", "Google Sans", sans-serif;

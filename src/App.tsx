@@ -11,7 +11,7 @@ import {
   levelOf,
   type Difficulty,
 } from "./lib/difficulty";
-import { buildPages, type SheetDensity } from "./lib/pages";
+import { buildPages } from "./lib/pages";
 import { foldPolish } from "./lib/syllables";
 import { loadCustomWords, saveCustomWords } from "./lib/storage";
 
@@ -26,7 +26,6 @@ export function App() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("wszystkie");
   const [selected, setSelected] = useState<Set<string>>(() => new Set(STARTER));
-  const [density, setDensity] = useState<SheetDensity>(4);
   const [separateLevels, setSeparateLevels] = useState(true);
   const [editing, setEditing] = useState<WordEntry | null>(null);
   const [adding, setAdding] = useState(false);
@@ -61,8 +60,8 @@ export function App() {
   }, [words, selected]);
 
   const pages = useMemo(
-    () => buildPages(selectedWords, density, separateLevels),
-    [selectedWords, density, separateLevels],
+    () => buildPages(selectedWords, separateLevels),
+    [selectedWords, separateLevels],
   );
 
   function toggle(id: string) {
@@ -270,17 +269,6 @@ export function App() {
                 </p>
               </div>
               <div className="toolbar-controls">
-                <fieldset className="segment">
-                  <legend>Na kartce</legend>
-                  <label className={density === 4 ? "is-on" : ""}>
-                    <input type="radio" name="density" checked={density === 4} onChange={() => setDensity(4)} />
-                    4
-                  </label>
-                  <label className={density === 6 ? "is-on" : ""}>
-                    <input type="radio" name="density" checked={density === 6} onChange={() => setDensity(6)} />
-                    6
-                  </label>
-                </fieldset>
                 <label className="check">
                   <input type="checkbox" checked={separateLevels} onChange={(event) => setSeparateLevels(event.target.checked)} />
                   Nie mieszaj poziomów
@@ -308,7 +296,6 @@ export function App() {
                         words={page}
                         page={index + 1}
                         total={pages.length}
-                        density={density}
                       />
                     </div>
                     <button type="button" className="sheet-download app-chrome" onClick={() => download(index)} disabled={busy !== null}>
@@ -413,7 +400,6 @@ export function App() {
             words={page}
             page={index + 1}
             total={pages.length}
-            density={density}
           />
         ))}
       </div>

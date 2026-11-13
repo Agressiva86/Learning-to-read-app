@@ -1,14 +1,14 @@
 import type { WordEntry } from "../data/words";
 import { DIFFICULTY_ORDER, DIFFICULTY_SHEET, levelOf, type Difficulty } from "./difficulty";
 
-export type SheetDensity = 4 | 6;
+const WORDS_PER_PAGE = 4;
 
-export function buildPages(words: WordEntry[], perPage: SheetDensity, separateLevels: boolean): WordEntry[][] {
+export function buildPages(words: WordEntry[], separateLevels: boolean): WordEntry[][] {
   const groups = separateLevels ? groupByDifficulty(words) : [words];
   const pages: WordEntry[][] = [];
   for (const group of groups) {
-    for (let index = 0; index < group.length; index += perPage) {
-      pages.push(group.slice(index, index + perPage));
+    for (let index = 0; index < group.length; index += WORDS_PER_PAGE) {
+      pages.push(group.slice(index, index + WORDS_PER_PAGE));
     }
   }
   return pages;
