@@ -444,10 +444,10 @@ input[type="checkbox"]:indeterminate {
   font-family: "Playwrite HU", "Google Sans", sans-serif;
   font-weight: 400;
   line-height: 1;
-  padding: 1.4mm 0 1mm;
+  padding: 2.8mm 0.4mm 2.6mm;
 }
 .letter.vowel { color: #c23b3b; }
-.letter-row.many .letter { border-radius: 1.1mm; padding-top: 0.5mm; }
+.letter-row.many .letter { border-radius: 1.1mm; padding-top: 2.2mm; padding-bottom: 2mm; }
 .sheet .art {
   flex: 1 1 0;
   min-height: 0;
@@ -478,7 +478,7 @@ input[type="checkbox"]:indeterminate {
   line-height: 1;
   letter-spacing: 0;
   font-variant-ligatures: none;
-  padding: 1.3mm 1mm 1mm;
+  padding: 2.8mm 1.2mm 2.6mm;
   white-space: nowrap;
 }
 .syl-row.many .syl { flex: 1 1 30%; }
