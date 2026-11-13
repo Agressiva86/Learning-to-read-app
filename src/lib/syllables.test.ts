@@ -1,6 +1,6 @@
 import { BUILTIN_WORDS } from "../data/words";
 import { ILLUSTRATIONS } from "../data/illustrations";
-import { levelOf } from "./difficulty";
+import { difficultyOf, levelOf } from "./difficulty";
 import { buildPages } from "./pages";
 import { isPolishWord, splitSyllables, syllablesMatchWord } from "./syllables";
 
@@ -15,10 +15,14 @@ describe("zestaw startowy", () => {
     }
   });
 
-  it("trzyma poziomy: 35 łatwych, 40 średnich, 19 trudnych", () => {
+  it("trzyma poziomy według liczby sylab", () => {
     const counts = { latwy: 0, sredni: 0, trudny: 0, inne: 0 };
-    for (const word of BUILTIN_WORDS) counts[levelOf(word)] += 1;
-    expect(counts).toEqual({ latwy: 35, sredni: 40, trudny: 19, inne: 0 });
+    for (const word of BUILTIN_WORDS) {
+      const level = difficultyOf(word.syllables.length);
+      expect(word.level, word.word).toBe(level);
+      counts[levelOf(word)] += 1;
+    }
+    expect(counts).toEqual({ latwy: 47, sredni: 46, trudny: 1, inne: 0 });
   });
 
   it("podpowiada ten sam podział, co w zestawie", () => {
@@ -43,6 +47,6 @@ describe("kartki", () => {
   it("układa cztery słowa na kartce", () => {
     const easy = BUILTIN_WORDS.filter((word) => levelOf(word) === "latwy");
     const pages = buildPages(easy, true);
-    expect(pages.map((page) => page.length)).toEqual([4, 4, 4, 4, 4, 4, 4, 4, 3]);
+    expect(pages.map((page) => page.length)).toEqual([4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3]);
   });
 });
