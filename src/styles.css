@@ -1,5 +1,5 @@
 :root {
-  --bg: #c8c9ce;
+  --bg: #f5f6f8;
   --shell: #f5f6f8;
   --card: #ffffff;
   --ink: #1c1c1e;
@@ -69,14 +69,14 @@ input[type="checkbox"]:indeterminate {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr);
-  padding: 16px;
+  padding: 0;
   gap: 0;
 }
 .rail {
   position: sticky;
-  top: 16px;
+  top: 0;
   align-self: start;
-  height: calc(100vh - 32px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +84,7 @@ input[type="checkbox"]:indeterminate {
   padding: 22px 10px;
   background: #1c1d21;
   color: #fff;
-  border-radius: 28px 0 0 28px;
+  border-radius: 0;
 }
 .rail-logo {
   display: grid;
@@ -116,9 +116,9 @@ input[type="checkbox"]:indeterminate {
 }
 .rail-item.is-on { background: #fff; color: var(--ink); }
 .shell {
-  min-height: calc(100vh - 32px);
+  min-height: 100vh;
   background: var(--shell);
-  border-radius: 0 28px 28px 0;
+  border-radius: 0;
 }
 .shell-bar {
   display: flex;
