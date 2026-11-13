@@ -470,6 +470,79 @@ input[type="checkbox"]:indeterminate {
   font-weight: 500;
   margin-top: 2mm;
 }
+.syllable-page { padding: 18px 0 8px; }
+.syllable-page .toolbar { margin: 0 18px 16px; }
+.syllable-page .notice { margin: 0 18px 16px; }
+.syllable-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+  padding: 0 18px 8px;
+}
+.syllable-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 16px 16px 14px;
+  box-shadow: var(--shadow);
+}
+.syllable-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.syllable-row-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+}
+.syllable-row-grid + .syllable-row-grid { margin-top: 6px; }
+.syllable-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  background: #fff;
+  font-family: "Playwrite DE Grund", "Google Sans", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1;
+  padding: 6px 2px 4px;
+}
+.syllable-sheet-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+}
+.syllable-block h2 {
+  margin: 0 0 1.6mm;
+  font-size: 13pt;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.syllable-print-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 2.2mm;
+}
+.syllable-print-row + .syllable-print-row { margin-top: 2.2mm; }
+.syllable-print {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 14mm;
+  border: 0.45mm solid #1c1c1e;
+  border-radius: 2.2mm;
+  font-family: "Playwrite DE Grund", "Google Sans", sans-serif;
+  font-weight: 400;
+  font-size: 18pt;
+  line-height: 1;
+  padding: 1.6mm 1mm 1.2mm;
+}
 
 .export-host {
   position: absolute;
@@ -556,7 +629,7 @@ input[type="checkbox"]:indeterminate {
   @page { size: A4 portrait; margin: 0; }
   body { background: #fff !important; }
   .app-chrome, .export-host, .overlay { display: none !important; }
-  .workspace, .preview, .sheet-stack { display: block !important; padding: 0 !important; }
+  .workspace, .preview, .sheet-stack, .syllable-page { display: block !important; padding: 0 !important; }
   .sheet-frame {
     width: auto !important;
     margin: 0 !important;
