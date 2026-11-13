@@ -10,7 +10,7 @@ export type WordEntry = {
   custom?: boolean;
 };
 
-/** Zestaw startowy: rzeczowniki w mianowniku, bez przymiotników i zdrobnień. */
+/** Rzeczowniki w mianowniku, bez przymiotników i zdrobnień. */
 export const BUILTIN_WORDS: WordEntry[] = [
   { id: "mama", word: "mama", syllables: ["ma","ma"], illustration: "mama", level: "latwy" },
   { id: "tata", word: "tata", syllables: ["ta","ta"], illustration: "tata", level: "latwy" },

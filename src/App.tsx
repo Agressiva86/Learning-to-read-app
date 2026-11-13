@@ -375,9 +375,7 @@ export function App() {
                         </>
                       )}
                     </span>
-                  ) : (
-                    <span className="builtin-tag">zestaw startowy</span>
-                  )}
+                  ) : null}
                 </li>
               );
             })}

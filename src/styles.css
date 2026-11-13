@@ -481,8 +481,6 @@ input[type="checkbox"]:indeterminate {
 .library { margin: 18px; padding: 22px; }
 .library-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
 .library-list { margin-top: 18px; }
-.builtin-tag { color: var(--muted); font-size: 14px; }
-
 .word-form { margin-top: 16px; padding: 18px; background: var(--soft); box-shadow: none; }
 .form-grid { display: grid; gap: 12px; margin-top: 14px; }
 .field { display: grid; gap: 4px; font-weight: 500; }
