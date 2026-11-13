@@ -124,19 +124,16 @@ export function App() {
     setPendingDelete(null);
   }
 
-  async function download(onlyIndex?: number) {
+  async function download() {
     const nodes = Array.from(exportRef.current?.querySelectorAll<HTMLElement>(".sheet") ?? []);
-    const chosen = onlyIndex == null ? nodes : nodes.filter((_, index) => index === onlyIndex);
-    if (chosen.length === 0) return;
+    if (nodes.length === 0) return;
     setNotice(null);
-    setBusy({ current: 0, total: chosen.length });
+    setBusy({ current: 0, total: nodes.length });
     try {
       const count = selectedWords.length;
-      const name = onlyIndex == null
-        ? `sylaby-${count}-slow.pdf`
-        : `sylaby-kartka-${onlyIndex + 1}.pdf`;
+      const name = `sylaby-${count}-slow.pdf`;
       const { downloadSheetsPdf } = await import("./lib/pdf");
-      await downloadSheetsPdf(chosen, name, (current, total) => setBusy({ current, total }));
+      await downloadSheetsPdf(nodes, name, (current, total) => setBusy({ current, total }));
     } catch {
       setNotice("Nie udało się zbudować pliku PDF. Użyj Drukuj i w oknie drukowania wybierz „Zapisz jako PDF”.");
     } finally {
@@ -277,7 +274,8 @@ export function App() {
                   Nie mieszaj poziomów
                 </label>
                 <button type="button" className="btn btn-primary" disabled={pages.length === 0 || busy !== null} onClick={() => download()}>
-                  Pobierz PDF
+                  <DownloadIcon />
+                  {pages.length > 1 ? `Pobierz PDF · ${pages.length} ${pluralStron(pages.length)}` : "Pobierz PDF"}
                 </button>
                 <button type="button" className="btn btn-leaf" disabled={pages.length === 0} onClick={() => window.print()}>
                   Drukuj
@@ -291,28 +289,7 @@ export function App() {
                 <p>Zaznacz słowa, a tutaj ułożą się kartki do kolorowania i czytania.</p>
               </div>
             ) : (
-              <div className="sheet-stack">
-                {pages.map((page, index) => (
-                  <div className="sheet-frame" key={page.map((word) => word.id).join("-")}>
-                    <div className="sheet-scale-slot">
-                      <Sheet
-                        words={page}
-                        page={index + 1}
-                        total={pages.length}
-                      />
-                    </div>
-                    <button type="button" className="sheet-download app-chrome" onClick={() => download(index)} disabled={busy !== null}>
-                      <span className="sheet-download-icon" aria-hidden="true">
-                        <DownloadIcon />
-                      </span>
-                      <span className="sheet-download-copy">
-                        <span className="sheet-download-title">Pobierz tę kartkę</span>
-                        <span className="sheet-download-meta">Plik PDF, format A4</span>
-                      </span>
-                    </button>
-                  </div>
-                ))}
-              </div>
+              <SheetSlider pages={pages} />
             )}
           </section>
         </main>
@@ -415,6 +392,95 @@ export function App() {
   );
 }
 
+function SheetSlider({ pages }: { pages: WordEntry[][] }) {
+  const [index, setIndex] = useState(0);
+  const drag = useRef<{ x: number; pointerId: number } | null>(null);
+  const safe = Math.min(index, Math.max(pages.length - 1, 0));
+
+  function go(delta: number) {
+    setIndex(Math.min(pages.length - 1, Math.max(0, safe + delta)));
+  }
+
+  return (
+    <div
+      className="sheet-slider"
+      role="region"
+      aria-roledescription="karuzela"
+      aria-label="Podgląd kartek"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          go(-1);
+        }
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          go(1);
+        }
+      }}
+    >
+      <div
+        className="sheet-slider-viewport"
+        onPointerDown={(event) => {
+          if (pages.length < 2) return;
+          drag.current = { x: event.clientX, pointerId: event.pointerId };
+        }}
+        onPointerUp={(event) => {
+          if (!drag.current || drag.current.pointerId !== event.pointerId) return;
+          const delta = event.clientX - drag.current.x;
+          drag.current = null;
+          if (delta > 48) go(-1);
+          else if (delta < -48) go(1);
+        }}
+        onPointerCancel={() => {
+          drag.current = null;
+        }}
+      >
+        <div className="sheet-stack" style={{ transform: `translateX(-${safe * 100}%)` }}>
+          {pages.map((page, pageIndex) => (
+            <div className="sheet-frame" key={page.map((word) => word.id).join("-")}>
+              <div className="sheet-scale-slot">
+                <Sheet words={page} page={pageIndex + 1} total={pages.length} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {pages.length > 1 ? (
+        <div className="slider-bar app-chrome">
+          <button type="button" className="slider-nav" onClick={() => go(-1)} disabled={safe === 0} aria-label="Poprzednia kartka">
+            <Chevron direction="left" />
+          </button>
+          <p className="slider-count">
+            Kartka {safe + 1} z {pages.length}
+          </p>
+          <button type="button" className="slider-nav" onClick={() => go(1)} disabled={safe === pages.length - 1} aria-label="Następna kartka">
+            <Chevron direction="right" />
+          </button>
+        </div>
+      ) : null}
+      <p className="sr-only" aria-live="polite">
+        Kartka {safe + 1} z {pages.length}
+      </p>
+    </div>
+  );
+}
+
+function Chevron({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path
+        d={direction === "left" ? "M14.5 6.5 9 12l5.5 5.5" : "M9.5 6.5 15 12l-5.5 5.5"}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function FilterButton({
   current,
   value,
@@ -489,6 +555,14 @@ function pluralWords(count: number): string {
   const mod100 = count % 100;
   if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "słowa";
   return "słów";
+}
+
+function pluralStron(count: number): string {
+  if (count === 1) return "strona";
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "strony";
+  return "stron";
 }
 
 function pluralPages(count: number): string {
