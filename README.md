@@ -1,12 +1,12 @@
-# Sylabowo
+# Grafi
 
 Kartki A4 do nauki czytania metodą sylabową. Każde słowo ma kolorowankę i sylaby w osobnych ramkach. Kartkę można pobrać jako PDF albo wydrukować.
 
-W zestawie startowym jest 40 słów z codzienności:
+W zestawie startowym są rzeczowniki w formie podstawowej, bez przymiotników i zdrobnień:
 
-- łatwy — 2 sylaby (mama, woda, kotek…)
-- średni — 3–4 sylaby (rodzina, samochód, czekolada…)
-- trudny — 5–6 sylab (temperatura, lokomotywa, niezapominajka…)
+- łatwy — mama, dom, kot, woda…
+- średni — banan, rower, biblioteka, motyl…
+- trudny — pomarańcza, samochód, piżama…
 
 Własne słowa zostają w przeglądarce, na tym urządzeniu.
 

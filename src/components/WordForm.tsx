@@ -33,7 +33,6 @@ export function WordForm({
   const difficulty = difficultyOf(syllables.length);
   const rawError = validate(word, syllables, existing, initial?.id);
   const error = word.trim() || syllableText.trim() ? rawError : null;
-  const outsideRange = !error && syllables.length > 0 && (syllables.length < 2 || syllables.length > 6);
   const pictures = useMemo(() => {
     const query = foldPolish(pictureQuery.trim());
     if (!query) return ILLUSTRATIONS;
@@ -117,11 +116,6 @@ export function WordForm({
         </div>
         {error ? <p className="form-error">{error}</p> : null}
         {!error && syllables.length > 0 ? <p className="form-ok">Sylaby składają się w to słowo.</p> : null}
-        {outsideRange ? (
-          <p className="form-note">
-            Kartki łatwe, średnie i trudne są dla słów od 2 do 6 sylab. To słowo zapisze się jako „inne”.
-          </p>
-        ) : null}
       </div>
 
       <div className="live-card" aria-hidden="true">

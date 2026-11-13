@@ -1,0 +1,10 @@
+/* Playwrite DE Grund, SIL Open Font License 1.1. Licencja: OFL-PlaywriteDEGrund.txt.
+   Plik zawiera łacinę i polskie znaki, wycinane z kroju zmiennego. */
+
+@font-face {
+  font-family: "Playwrite DE Grund";
+  font-style: normal;
+  font-weight: 100 400;
+  font-display: swap;
+  src: url("./playwrite-de-grund.woff2") format("woff2");
+}
