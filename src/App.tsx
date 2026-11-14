@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Illustration } from "./components/Illustration";
 import { Sheet } from "./components/Sheet";
+import { SyllableView } from "./components/SyllableView";
 import { WordForm } from "./components/WordForm";
 import type { WordEntry } from "./data/words";
 import { mergeWords } from "./data/words";
@@ -8,14 +9,14 @@ import {
   DIFFICULTY_HINT,
   DIFFICULTY_LABEL,
   DIFFICULTY_ORDER,
-  difficultyOf,
+  levelOf,
   type Difficulty,
 } from "./lib/difficulty";
-import { buildPages, type SheetDensity } from "./lib/pages";
+import { buildPages } from "./lib/pages";
 import { foldPolish } from "./lib/syllables";
 import { loadCustomWords, saveCustomWords } from "./lib/storage";
 
-type View = "karty" | "slowa";
+type View = "karty" | "slowa" | "sylaby";
 type Filter = "wszystkie" | Difficulty;
 
 const STARTER = ["mama", "tata", "woda", "mleko"];
@@ -26,9 +27,7 @@ export function App() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("wszystkie");
   const [selected, setSelected] = useState<Set<string>>(() => new Set(STARTER));
-  const [density, setDensity] = useState<SheetDensity>(4);
   const [separateLevels, setSeparateLevels] = useState(true);
-  const [showWord, setShowWord] = useState(false);
   const [editing, setEditing] = useState<WordEntry | null>(null);
   const [adding, setAdding] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
@@ -38,12 +37,12 @@ export function App() {
   const previewRef = useRef<HTMLDivElement>(null);
 
   const words = useMemo(() => mergeWords(custom), [custom]);
-  const hasOther = words.some((word) => difficultyOf(word.syllables.length) === "inne");
+  const hasOther = words.some((word) => levelOf(word) === "inne");
 
   const visible = useMemo(() => {
     const folded = foldPolish(query.trim());
     return words.filter((word) => {
-      const level = difficultyOf(word.syllables.length);
+      const level = levelOf(word);
       if (filter !== "wszystkie" && level !== filter) return false;
       if (!folded) return true;
       return foldPolish(word.word).includes(folded) || word.syllables.some((part) => foldPolish(part).includes(folded));
@@ -54,16 +53,16 @@ export function App() {
     return words
       .filter((word) => selected.has(word.id))
       .sort((a, b) => {
-        const byLevel = DIFFICULTY_ORDER.indexOf(difficultyOf(a.syllables.length))
-          - DIFFICULTY_ORDER.indexOf(difficultyOf(b.syllables.length));
+        const byLevel = DIFFICULTY_ORDER.indexOf(levelOf(a))
+          - DIFFICULTY_ORDER.indexOf(levelOf(b));
         if (byLevel !== 0) return byLevel;
         return words.indexOf(a) - words.indexOf(b);
       });
   }, [words, selected]);
 
   const pages = useMemo(
-    () => buildPages(selectedWords, density, separateLevels),
-    [selectedWords, density, separateLevels],
+    () => buildPages(selectedWords, separateLevels),
+    [selectedWords, separateLevels],
   );
 
   function toggle(id: string) {
@@ -87,20 +86,12 @@ export function App() {
     });
   }
 
-  function selectVisible() {
-    setSelected((current) => {
-      const next = new Set(current);
-      for (const word of visible) next.add(word.id);
-      return next;
-    });
+  function selectAll() {
+    setSelected(new Set(words.map((word) => word.id)));
   }
 
-  function clearVisible() {
-    setSelected((current) => {
-      const next = new Set(current);
-      for (const word of visible) next.delete(word.id);
-      return next;
-    });
+  function clearAll() {
+    setSelected(new Set());
   }
 
   function persist(next: WordEntry[]) {
@@ -133,19 +124,16 @@ export function App() {
     setPendingDelete(null);
   }
 
-  async function download(onlyIndex?: number) {
+  async function download() {
     const nodes = Array.from(exportRef.current?.querySelectorAll<HTMLElement>(".sheet") ?? []);
-    const chosen = onlyIndex == null ? nodes : nodes.filter((_, index) => index === onlyIndex);
-    if (chosen.length === 0) return;
+    if (nodes.length === 0) return;
     setNotice(null);
-    setBusy({ current: 0, total: chosen.length });
+    setBusy({ current: 0, total: nodes.length });
     try {
       const count = selectedWords.length;
-      const name = onlyIndex == null
-        ? `sylaby-${count}-slow.pdf`
-        : `sylaby-kartka-${onlyIndex + 1}.pdf`;
+      const name = `sylaby-${count}-slow.pdf`;
       const { downloadSheetsPdf } = await import("./lib/pdf");
-      await downloadSheetsPdf(chosen, name, (current, total) => setBusy({ current, total }));
+      await downloadSheetsPdf(nodes, name, (current, total) => setBusy({ current, total }));
     } catch {
       setNotice("Nie udało się zbudować pliku PDF. Użyj Drukuj i w oknie drukowania wybierz „Zapisz jako PDF”.");
     } finally {
@@ -155,31 +143,38 @@ export function App() {
 
   return (
     <div className="app">
-      <header className="topbar app-chrome">
-        <HeroWave />
-        <div className="brand">
-          <div>
-            <p className="brand-kicker">Metoda sylabowa</p>
-            <h1>Sylabowo</h1>
-            <p className="hero-lead">Ułóż kartkę do czytania i kolorowania.</p>
-          </div>
+      <aside className="rail app-chrome">
+        <div className="rail-logo">
+          <RailMark />
+          <strong>Grafi</strong>
         </div>
-        <div className="topbar-side">
-          <span className="avatar" aria-hidden="true">
-            <Mascot />
-          </span>
-          <nav className="tabs" aria-label="Widoki">
-            <button type="button" className={view === "karty" ? "tab is-on" : "tab"} onClick={() => setView("karty")}>
-              Kartki do druku
-            </button>
-            <button type="button" className={view === "slowa" ? "tab is-on" : "tab"} onClick={() => setView("slowa")}>
-              Słowa
-            </button>
-          </nav>
+        <nav className="rail-nav" aria-label="Widoki">
+          <button type="button" className={view === "karty" ? "rail-item is-on" : "rail-item"} onClick={() => setView("karty")}>
+            <SheetNavIcon />
+            <span>Kartki</span>
+          </button>
+          <button type="button" className={view === "slowa" ? "rail-item is-on" : "rail-item"} onClick={() => setView("slowa")}>
+            <WordsNavIcon />
+            <span>Słowa</span>
+          </button>
+          <button type="button" className={view === "sylaby" ? "rail-item is-on" : "rail-item"} onClick={() => setView("sylaby")}>
+            <SyllableNavIcon />
+            <span>Sylaby</span>
+          </button>
+        </nav>
+      </aside>
+      <div className="shell">
+      <header className="shell-bar app-chrome">
+        <div>
+          <p className="shell-kicker">Metoda sylabowa</p>
+          <h1>Grafi</h1>
         </div>
+        <p className="shell-lead">Ułóż kartkę do czytania i kolorowania.</p>
       </header>
 
-      {view === "karty" ? (
+      {view === "sylaby" ? (
+        <SyllableView busy={busy} setBusy={setBusy} setNotice={setNotice} />
+      ) : view === "karty" ? (
         <main className="workspace">
           <section className="picker app-chrome" aria-label="Wybór słów">
             <div className="picker-head">
@@ -202,18 +197,18 @@ export function App() {
                   current={filter}
                   value={level}
                   onSelect={setFilter}
-                  count={words.filter((word) => difficultyOf(word.syllables.length) === level).length}
+                  count={words.filter((word) => levelOf(word) === level).length}
                   label={DIFFICULTY_LABEL[level]}
                 />
               ))}
             </div>
             <div className="picker-actions">
-              <button type="button" className="btn btn-ghost" onClick={selectVisible}>Zaznacz widoczne</button>
-              <button type="button" className="btn btn-ghost" onClick={clearVisible}>Odznacz widoczne</button>
+              <button type="button" className="btn btn-ghost" onClick={selectAll}>Zaznacz wszystkie</button>
+              <button type="button" className="btn btn-ghost" onClick={clearAll}>Odznacz wszystkie</button>
             </div>
             <div className="groups">
               {DIFFICULTY_ORDER.map((level) => {
-                const group = visible.filter((word) => difficultyOf(word.syllables.length) === level);
+                const group = visible.filter((word) => levelOf(word) === level);
                 if (group.length === 0) return null;
                 const selectedCount = group.filter((word) => selected.has(word.id)).length;
                 return (
@@ -274,27 +269,13 @@ export function App() {
                 </p>
               </div>
               <div className="toolbar-controls">
-                <fieldset className="segment">
-                  <legend>Na kartce</legend>
-                  <label className={density === 4 ? "is-on" : ""}>
-                    <input type="radio" name="density" checked={density === 4} onChange={() => setDensity(4)} />
-                    4
-                  </label>
-                  <label className={density === 6 ? "is-on" : ""}>
-                    <input type="radio" name="density" checked={density === 6} onChange={() => setDensity(6)} />
-                    6
-                  </label>
-                </fieldset>
                 <label className="check">
                   <input type="checkbox" checked={separateLevels} onChange={(event) => setSeparateLevels(event.target.checked)} />
                   Nie mieszaj poziomów
                 </label>
-                <label className="check">
-                  <input type="checkbox" checked={showWord} onChange={(event) => setShowWord(event.target.checked)} />
-                  Pokaż całe słowo dla rodzica
-                </label>
                 <button type="button" className="btn btn-primary" disabled={pages.length === 0 || busy !== null} onClick={() => download()}>
-                  Pobierz PDF
+                  <DownloadIcon />
+                  {pages.length > 1 ? `Pobierz PDF · ${pages.length} ${pluralStron(pages.length)}` : "Pobierz PDF"}
                 </button>
                 <button type="button" className="btn btn-leaf" disabled={pages.length === 0} onClick={() => window.print()}>
                   Drukuj
@@ -308,30 +289,7 @@ export function App() {
                 <p>Zaznacz słowa, a tutaj ułożą się kartki do kolorowania i czytania.</p>
               </div>
             ) : (
-              <div className="sheet-stack">
-                {pages.map((page, index) => (
-                  <div className="sheet-frame" key={page.map((word) => word.id).join("-")}>
-                    <div className="sheet-scale-slot">
-                      <Sheet
-                        words={page}
-                        page={index + 1}
-                        total={pages.length}
-                        density={density}
-                        showWord={showWord}
-                      />
-                    </div>
-                    <button type="button" className="sheet-download app-chrome" onClick={() => download(index)} disabled={busy !== null}>
-                      <span className="sheet-download-icon" aria-hidden="true">
-                        <DownloadIcon />
-                      </span>
-                      <span className="sheet-download-copy">
-                        <span className="sheet-download-title">Pobierz tę kartkę</span>
-                        <span className="sheet-download-meta">Plik PDF, format A4</span>
-                      </span>
-                    </button>
-                  </div>
-                ))}
-              </div>
+              <SheetSlider pages={pages} />
             )}
           </section>
         </main>
@@ -340,7 +298,7 @@ export function App() {
           <div className="library-head">
             <div>
               <h2>Zestaw słów</h2>
-              <p>Na starcie jest 40 słów z domu, jedzenia, zabawy i dnia codziennego. Możesz dopisać własne.</p>
+              <p>Na starcie są rzeczowniki w formie podstawowej: łatwe, średnie i trudne. Możesz dopisać własne.</p>
             </div>
             <button
               type="button"
@@ -366,7 +324,7 @@ export function App() {
           ) : null}
           <ul className="library-list">
             {words.map((word) => {
-              const level = difficultyOf(word.syllables.length);
+              const level = levelOf(word);
               return (
                 <li key={word.id} className="library-row">
                   <span className="thumb" aria-hidden="true">
@@ -405,9 +363,7 @@ export function App() {
                         </>
                       )}
                     </span>
-                  ) : (
-                    <span className="builtin-tag">zestaw startowy</span>
-                  )}
+                  ) : null}
                 </li>
               );
             })}
@@ -422,8 +378,6 @@ export function App() {
             words={page}
             page={index + 1}
             total={pages.length}
-            density={density}
-            showWord={showWord}
           />
         ))}
       </div>
@@ -433,7 +387,97 @@ export function App() {
           Tworzę PDF… kartka {busy.current} z {busy.total}
         </div>
       ) : null}
+      </div>
     </div>
+  );
+}
+
+function SheetSlider({ pages }: { pages: WordEntry[][] }) {
+  const [index, setIndex] = useState(0);
+  const drag = useRef<{ x: number; pointerId: number } | null>(null);
+  const safe = Math.min(index, Math.max(pages.length - 1, 0));
+
+  function go(delta: number) {
+    setIndex(Math.min(pages.length - 1, Math.max(0, safe + delta)));
+  }
+
+  return (
+    <div
+      className="sheet-slider"
+      role="region"
+      aria-roledescription="karuzela"
+      aria-label="Podgląd kartek"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          go(-1);
+        }
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          go(1);
+        }
+      }}
+    >
+      <div
+        className="sheet-slider-viewport"
+        onPointerDown={(event) => {
+          if (pages.length < 2) return;
+          drag.current = { x: event.clientX, pointerId: event.pointerId };
+        }}
+        onPointerUp={(event) => {
+          if (!drag.current || drag.current.pointerId !== event.pointerId) return;
+          const delta = event.clientX - drag.current.x;
+          drag.current = null;
+          if (delta > 48) go(-1);
+          else if (delta < -48) go(1);
+        }}
+        onPointerCancel={() => {
+          drag.current = null;
+        }}
+      >
+        <div className="sheet-stack" style={{ transform: `translateX(-${safe * 100}%)` }}>
+          {pages.map((page, pageIndex) => (
+            <div className="sheet-frame" key={page.map((word) => word.id).join("-")}>
+              <div className="sheet-scale-slot">
+                <Sheet words={page} page={pageIndex + 1} total={pages.length} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {pages.length > 1 ? (
+        <div className="slider-bar app-chrome">
+          <button type="button" className="slider-nav" onClick={() => go(-1)} disabled={safe === 0} aria-label="Poprzednia kartka">
+            <Chevron direction="left" />
+          </button>
+          <p className="slider-count">
+            Kartka {safe + 1} z {pages.length}
+          </p>
+          <button type="button" className="slider-nav" onClick={() => go(1)} disabled={safe === pages.length - 1} aria-label="Następna kartka">
+            <Chevron direction="right" />
+          </button>
+        </div>
+      ) : null}
+      <p className="sr-only" aria-live="polite">
+        Kartka {safe + 1} z {pages.length}
+      </p>
+    </div>
+  );
+}
+
+function Chevron({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path
+        d={direction === "left" ? "M14.5 6.5 9 12l5.5 5.5" : "M9.5 6.5 15 12l-5.5 5.5"}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -469,30 +513,38 @@ function DownloadIcon() {
   );
 }
 
-function HeroWave() {
+function RailMark() {
   return (
-    <svg className="hero-wave" viewBox="0 0 800 240" preserveAspectRatio="none" aria-hidden="true">
-      <g fill="none" stroke="rgba(255,255,255,0.42)" strokeWidth="1.15">
-        <path d="M-20 62c90-46 150 34 246 8 98-26 150-74 252-48 86 22 150 8 230-22" />
-        <path d="M-20 92c96-40 158 26 252 4 102-24 156-66 260-42 84 18 156 10 236-18" />
-        <path d="M-20 122c104-36 166 18 260 0 106-22 164-58 270-36 80 16 158 12 242-14" />
-        <path d="M-20 152c112-32 174 12 268-4 110-20 172-50 278-30 78 14 160 14 250-10" />
-        <path d="M80 46c74-28 128 22 210 6 90-18 136-50 228-34" />
-      </g>
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+      <circle cx="13" cy="16" r="7" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <circle cx="20" cy="16" r="7" fill="none" stroke="currentColor" strokeWidth="1.7" />
     </svg>
   );
 }
 
-function Mascot() {
+function SheetNavIcon() {
   return (
-    <svg className="mascot" viewBox="0 0 72 72" aria-hidden="true">
-      <path d="M18 40c0-14 10-24 22-24 8 0 14 4 16 8 6-2 12 2 12 8 0 4-2 7-6 8 2 10-6 20-18 20-14 0-26-8-26-20z" fill="#fff" stroke="#241c17" strokeWidth="2.2" />
-      <path d="M22 28c2-10 8-16 10-16 2 6 2 12 0 16" fill="#fff" stroke="#241c17" strokeWidth="2" />
-      <path d="M34 28c2-12 8-18 10-16 1 6 0 12-2 16" fill="#fff" stroke="#241c17" strokeWidth="2" />
-      <path d="M30 40 q4 -5 8 0 M46 40 q4 -5 8 0" fill="none" stroke="#241c17" strokeWidth="2" strokeLinecap="round" />
-      <path d="M34 48 q8 10 16 0" fill="#fff" stroke="#241c17" strokeWidth="2" />
-      <circle cx="28" cy="46" r="2" fill="none" stroke="#241c17" />
-      <circle cx="56" cy="46" r="2" fill="none" stroke="#241c17" />
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <rect x="5" y="3.5" width="14" height="17" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function WordsNavIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M5 6.5h14M5 12h14M5 17.5h9" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function SyllableNavIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <rect x="3.5" y="5" width="7" height="6" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <rect x="13.5" y="5" width="7" height="6" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
+      <rect x="8.5" y="13" width="7" height="6" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
     </svg>
   );
 }
@@ -503,6 +555,14 @@ function pluralWords(count: number): string {
   const mod100 = count % 100;
   if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "słowa";
   return "słów";
+}
+
+function pluralStron(count: number): string {
+  if (count === 1) return "strona";
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "strony";
+  return "stron";
 }
 
 function pluralPages(count: number): string {

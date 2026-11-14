@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import "./fonts/google-sans.css";
+import "./fonts/playwrite-de-grund.css";
 import "./styles.css";
 
 const root = document.getElementById("root");

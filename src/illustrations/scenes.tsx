@@ -1,10 +1,10 @@
-import type { SceneCmp } from "./scenesDaily";
-import { dailyScenes } from "./scenesDaily";
-import { moreScenes } from "./scenesMore";
-import { peopleScenes } from "./scenesPeople";
+import { easyScenes } from "./doodlesEasy";
+import { hardScenes } from "./doodlesHard";
+import { midScenes } from "./doodlesMid";
+import type { SceneCmp } from "./kit";
 
 export const scenes: Record<string, SceneCmp> = {
-  ...peopleScenes,
-  ...dailyScenes,
-  ...moreScenes,
+  ...easyScenes,
+  ...midScenes,
+  ...hardScenes,
 };
