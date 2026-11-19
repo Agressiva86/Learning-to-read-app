@@ -8,7 +8,7 @@ W zestawie startowym są rzeczowniki w formie podstawowej, bez przymiotników i 
 - średni — banan, rower, biblioteka, motyl…
 - trudny — pomarańcza, samochód, piżama…
 
-To zwykła strona w przeglądarce. Własne słowa zostają zapisane na tym urządzeniu.
+To zwykła strona w przeglądarce.
 
 ## Uruchomienie na swoim komputerze
 

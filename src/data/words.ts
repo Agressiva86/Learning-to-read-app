@@ -7,7 +7,6 @@ export type WordEntry = {
   syllables: string[];
   illustration: IllustrationId;
   level?: Difficulty;
-  custom?: boolean;
 };
 
 /** Rzeczowniki w mianowniku, bez przymiotników i zdrobnień. */
@@ -107,10 +106,3 @@ export const BUILTIN_WORDS: WordEntry[] = [
   { id: "pantofel", word: "pantofel", syllables: ["pan","to","fel"], illustration: "pantofel", level: "sredni" },
   { id: "pizama", word: "piżama", syllables: ["pi","ża","ma"], illustration: "pizama", level: "sredni" },
 ];
-
-export function mergeWords(custom: WordEntry[]): WordEntry[] {
-  const ids = new Set(BUILTIN_WORDS.map((word) => word.id));
-  const names = new Set(BUILTIN_WORDS.map((word) => word.word));
-  const extra = custom.filter((word) => !ids.has(word.id) && !names.has(word.word));
-  return [...BUILTIN_WORDS, ...extra];
-}

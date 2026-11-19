@@ -60,9 +60,9 @@ export const SYLLABLE_GROUPS: SyllableGroup[] = [
 ];
 
 const TITLE_MM = 8;
-const ROW_MM = 18;
-const GROUP_GAP_MM = 4;
-const PAGE_MM = 236;
+const ROW_MM = 36;
+const GROUP_GAP_MM = 6;
+const PAGE_MM = 260;
 
 function groupHeight(item: SyllableGroup): number {
   return TITLE_MM + item.rows.length * ROW_MM + GROUP_GAP_MM;

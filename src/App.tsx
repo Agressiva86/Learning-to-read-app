@@ -1,10 +1,10 @@
 import { useMemo, useRef, useState } from "react";
 import { Illustration } from "./components/Illustration";
 import { Sheet } from "./components/Sheet";
+import { SheetCarousel } from "./components/SheetCarousel";
 import { SyllableView } from "./components/SyllableView";
-import { WordForm } from "./components/WordForm";
 import type { WordEntry } from "./data/words";
-import { mergeWords } from "./data/words";
+import { BUILTIN_WORDS } from "./data/words";
 import {
   DIFFICULTY_HINT,
   DIFFICULTY_LABEL,
@@ -14,30 +14,23 @@ import {
 } from "./lib/difficulty";
 import { buildPages } from "./lib/pages";
 import { foldPolish } from "./lib/syllables";
-import { loadCustomWords, saveCustomWords } from "./lib/storage";
 
 type View = "karty" | "slowa" | "sylaby";
 type Filter = "wszystkie" | Difficulty;
 
 const STARTER = ["mama", "tata", "woda", "mleko"];
 
+const words = BUILTIN_WORDS;
+
 export function App() {
-  const [custom, setCustom] = useState<WordEntry[]>(() => loadCustomWords());
   const [view, setView] = useState<View>("karty");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("wszystkie");
   const [selected, setSelected] = useState<Set<string>>(() => new Set(STARTER));
   const [separateLevels, setSeparateLevels] = useState(true);
-  const [editing, setEditing] = useState<WordEntry | null>(null);
-  const [adding, setAdding] = useState(false);
-  const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const [busy, setBusy] = useState<{ current: number; total: number } | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const exportRef = useRef<HTMLDivElement>(null);
-  const previewRef = useRef<HTMLDivElement>(null);
-
-  const words = useMemo(() => mergeWords(custom), [custom]);
-  const hasOther = words.some((word) => levelOf(word) === "inne");
 
   const visible = useMemo(() => {
     const folded = foldPolish(query.trim());
@@ -94,36 +87,6 @@ export function App() {
     setSelected(new Set());
   }
 
-  function persist(next: WordEntry[]) {
-    setCustom(next);
-    saveCustomWords(next);
-  }
-
-  function saveWord(word: WordEntry) {
-    const next = custom.some((item) => item.id === word.id)
-      ? custom.map((item) => (item.id === word.id ? word : item))
-      : [...custom, word];
-    persist(next);
-    setSelected((current) => new Set(current).add(word.id));
-    setEditing(null);
-    setAdding(false);
-    setView("karty");
-    setFilter("wszystkie");
-    setQuery("");
-    setNotice(`Zapisano słowo „${word.word}” i dodano je do kartek.`);
-    requestAnimationFrame(() => previewRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
-  }
-
-  function deleteWord(id: string) {
-    persist(custom.filter((word) => word.id !== id));
-    setSelected((current) => {
-      const next = new Set(current);
-      next.delete(id);
-      return next;
-    });
-    setPendingDelete(null);
-  }
-
   async function download() {
     const nodes = Array.from(exportRef.current?.querySelectorAll<HTMLElement>(".sheet") ?? []);
     if (nodes.length === 0) return;
@@ -164,14 +127,6 @@ export function App() {
         </nav>
       </aside>
       <div className="shell">
-      <header className="shell-bar app-chrome">
-        <div>
-          <p className="shell-kicker">Metoda sylabowa</p>
-          <h1>Grafi</h1>
-        </div>
-        <p className="shell-lead">Ułóż kartkę do czytania i kolorowania.</p>
-      </header>
-
       {view === "sylaby" ? (
         <SyllableView busy={busy} setBusy={setBusy} setNotice={setNotice} />
       ) : view === "karty" ? (
@@ -191,7 +146,7 @@ export function App() {
             </label>
             <div className="filters" role="radiogroup" aria-label="Poziom trudności">
               <FilterButton current={filter} value="wszystkie" onSelect={setFilter} count={words.length} label="Wszystkie" />
-              {DIFFICULTY_ORDER.filter((level) => level !== "inne" || hasOther).map((level) => (
+              {DIFFICULTY_ORDER.filter((level) => level !== "inne").map((level) => (
                 <FilterButton
                   key={level}
                   current={filter}
@@ -258,7 +213,7 @@ export function App() {
             </div>
           </section>
 
-          <section className="preview" ref={previewRef} aria-label="Podgląd kartek">
+          <section className="preview" aria-label="Podgląd kartek">
             <div className="toolbar app-chrome">
               <div>
                 <h2>Podgląd&nbsp;A4</h2>
@@ -298,30 +253,9 @@ export function App() {
           <div className="library-head">
             <div>
               <h2>Zestaw słów</h2>
-              <p>Na starcie są rzeczowniki w formie podstawowej: łatwe, średnie i trudne. Możesz dopisać własne.</p>
+              <p>Rzeczowniki w formie podstawowej: łatwe, średnie i trudne.</p>
             </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {
-                setAdding(true);
-                setEditing(null);
-              }}
-            >
-              Dodaj słowo
-            </button>
           </div>
-          {adding || editing ? (
-            <WordForm
-              existing={words}
-              initial={editing}
-              onSave={saveWord}
-              onCancel={() => {
-                setAdding(false);
-                setEditing(null);
-              }}
-            />
-          ) : null}
           <ul className="library-list">
             {words.map((word) => {
               const level = levelOf(word);
@@ -339,31 +273,6 @@ export function App() {
                     </span>
                   </span>
                   <span className={`badge ${level}`}>{DIFFICULTY_LABEL[level]}</span>
-                  {word.custom ? (
-                    <span className="row-actions">
-                      {pendingDelete === word.id ? (
-                        <>
-                          <span>Usunąć?</span>
-                          <button type="button" className="btn btn-primary" onClick={() => deleteWord(word.id)}>Tak</button>
-                          <button type="button" className="btn btn-ghost" onClick={() => setPendingDelete(null)}>Nie</button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            type="button"
-                            className="btn btn-ghost"
-                            onClick={() => {
-                              setEditing(word);
-                              setAdding(false);
-                            }}
-                          >
-                            Edytuj
-                          </button>
-                          <button type="button" className="btn btn-ghost" onClick={() => setPendingDelete(word.id)}>Usuń</button>
-                        </>
-                      )}
-                    </span>
-                  ) : null}
                 </li>
               );
             })}
@@ -393,91 +302,16 @@ export function App() {
 }
 
 function SheetSlider({ pages }: { pages: WordEntry[][] }) {
-  const [index, setIndex] = useState(0);
-  const drag = useRef<{ x: number; pointerId: number } | null>(null);
-  const safe = Math.min(index, Math.max(pages.length - 1, 0));
-
-  function go(delta: number) {
-    setIndex(Math.min(pages.length - 1, Math.max(0, safe + delta)));
-  }
-
+  const signature = pages.map((page) => page.map((word) => word.id).join(":")).join("|");
   return (
-    <div
-      className="sheet-slider"
-      role="region"
-      aria-roledescription="karuzela"
-      aria-label="Podgląd kartek"
-      tabIndex={0}
-      onKeyDown={(event) => {
-        if (event.key === "ArrowLeft") {
-          event.preventDefault();
-          go(-1);
-        }
-        if (event.key === "ArrowRight") {
-          event.preventDefault();
-          go(1);
-        }
-      }}
-    >
-      <div
-        className="sheet-slider-viewport"
-        onPointerDown={(event) => {
-          if (pages.length < 2) return;
-          drag.current = { x: event.clientX, pointerId: event.pointerId };
-        }}
-        onPointerUp={(event) => {
-          if (!drag.current || drag.current.pointerId !== event.pointerId) return;
-          const delta = event.clientX - drag.current.x;
-          drag.current = null;
-          if (delta > 48) go(-1);
-          else if (delta < -48) go(1);
-        }}
-        onPointerCancel={() => {
-          drag.current = null;
-        }}
-      >
-        <div className="sheet-stack" style={{ transform: `translateX(-${safe * 100}%)` }}>
-          {pages.map((page, pageIndex) => (
-            <div className="sheet-frame" key={page.map((word) => word.id).join("-")}>
-              <div className="sheet-scale-slot">
-                <Sheet words={page} page={pageIndex + 1} total={pages.length} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {pages.length > 1 ? (
-        <div className="slider-bar app-chrome">
-          <button type="button" className="slider-nav" onClick={() => go(-1)} disabled={safe === 0} aria-label="Poprzednia kartka">
-            <Chevron direction="left" />
-          </button>
-          <p className="slider-count">
-            Kartka {safe + 1} z {pages.length}
-          </p>
-          <button type="button" className="slider-nav" onClick={() => go(1)} disabled={safe === pages.length - 1} aria-label="Następna kartka">
-            <Chevron direction="right" />
-          </button>
-        </div>
-      ) : null}
-      <p className="sr-only" aria-live="polite">
-        Kartka {safe + 1} z {pages.length}
-      </p>
-    </div>
-  );
-}
-
-function Chevron({ direction }: { direction: "left" | "right" }) {
-  return (
-    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-      <path
-        d={direction === "left" ? "M14.5 6.5 9 12l5.5 5.5" : "M9.5 6.5 15 12l-5.5 5.5"}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <SheetCarousel
+      count={pages.length}
+      signature={signature}
+      ariaLabel="Podgląd kartek"
+      label={(index, total) => `Kartka ${index + 1} z ${total}`}
+      getKey={(index) => pages[index]?.map((word) => word.id).join("-") ?? String(index)}
+      renderSlide={(index) => <Sheet words={pages[index] ?? []} page={index + 1} total={pages.length} />}
+    />
   );
 }
 
